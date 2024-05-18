@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=3 uid="uid://d1j8g76otos0s"]
+
+[ext_resource type="Shader" path="res://assets/shaders/pixelGradientify.gdshader" id="1_fjy26"]
+[ext_resource type="Texture2D" uid="uid://467lg2h2oi7u" path="res://assets/textures/run.png" id="2_t4jgb"]
+
+[sub_resource type="Gradient" id="Gradient_20tqv"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.263736, 0.763736)
+colors = PackedColorArray(0.516317, 3.69163e-05, 0.419212, 1, 0.457975, 0.70959, 0.172156, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_xoyjq"]
+gradient = SubResource("Gradient_20tqv")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8e5dg"]
+resource_local_to_scene = true
+shader = ExtResource("1_fjy26")
+shader_parameter/gradient = SubResource("GradientTexture2D_xoyjq")
+
+[node name="Icon" type="Sprite2D"]
+material = SubResource("ShaderMaterial_8e5dg")
+position = Vector2(10, -10)
+texture = ExtResource("2_t4jgb")

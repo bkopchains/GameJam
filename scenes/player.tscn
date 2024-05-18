@@ -1,0 +1,86 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhub7dipd1484"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_mp2cn"]
+[ext_resource type="Texture2D" uid="uid://cbe7ec2ay350k" path="res://assets/textures/ranger.png" id="2_iqjj6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jbty4"]
+rough = true
+bounce = 0.38
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6yfoq"]
+size = Vector2(6, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_67pdr"]
+size = Vector2(3, 6)
+
+[node name="Player" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_jbty4")
+script = ExtResource("1_mp2cn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_6yfoq")
+
+[node name="Body" type="Sprite2D" parent="."]
+position = Vector2(0, -15)
+texture = ExtResource("2_iqjj6")
+region_enabled = true
+region_rect = Rect2(2, 4, 8, 19)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+show_behind_parent = true
+position = Vector2(-2, -5.5)
+node_a = NodePath("..")
+node_b = NodePath("../Leg")
+bias = 0.435
+angular_limit_lower = -0.837758
+angular_limit_upper = 0.837758
+
+[node name="Leg" type="RigidBody2D" parent="."]
+position = Vector2(-2, -5.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leg"]
+position = Vector2(0.5, 3)
+shape = SubResource("RectangleShape2D_67pdr")
+
+[node name="Leg" type="Sprite2D" parent="Leg"]
+texture = ExtResource("2_iqjj6")
+offset = Vector2(0.5, 3)
+region_enabled = true
+region_rect = Rect2(3, 23, 3, 6)
+
+[node name="PinJoint2D2" type="PinJoint2D" parent="."]
+show_behind_parent = true
+position = Vector2(2, -5.5)
+node_a = NodePath("..")
+node_b = NodePath("../Leg2")
+bias = 0.435
+angular_limit_lower = -0.837758
+angular_limit_upper = 0.837758
+
+[node name="Leg2" type="RigidBody2D" parent="."]
+position = Vector2(2, -5.5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Leg2"]
+position = Vector2(0.5, 3)
+shape = SubResource("RectangleShape2D_67pdr")
+
+[node name="Leg2" type="Sprite2D" parent="Leg2"]
+texture = ExtResource("2_iqjj6")
+offset = Vector2(0.5, 3)
+region_enabled = true
+region_rect = Rect2(3, 23, 3, 6)
+
+[node name="Arm" type="Sprite2D" parent="."]
+position = Vector2(0, -13.5)
+texture = ExtResource("2_iqjj6")
+offset = Vector2(5.5, 0)
+region_enabled = true
+region_rect = Rect2(19, 11, 11, 18)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Arm"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Arm/StaticBody2D"]
+polygon = PackedVector2Array(5, -9, 7, -9, 7, -8, 8, -8, 8, -7, 9, -7, 9, -6, 10, -6, 10, -4, 11, -4, 11, 4, 10, 4, 10, 6, 9, 6, 9, 7, 8, 7, 8, 8, 7, 8, 7, 9, 5, 9, 5, 1, 0, 1, 0, -1, 5, -1)
