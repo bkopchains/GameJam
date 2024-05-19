@@ -15,11 +15,12 @@ var starting_recoil_speed=300.0
 var recoil_speed=500.0
 var loading = false
 var time_loaded=0
-var time_denominator=.3
+var time_denominator=.2
 var fireball_scaler=1
-var max_fireball_scaler=3
+var max_fireball_scaler=2
 var starting_fireball_speed=200.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
+var starting_gravity=980
 var gravity = 980
 var starting_fireball_scale=null
 var is_alive=true
@@ -51,7 +52,7 @@ func _physics_process(delta):
 	if(loading):
 		if(is_alive):
 			time_loaded+=delta
-			print(time_loaded)
+
 			if(time_loaded/time_denominator>max_fireball_scaler):
 				fireball_scaler=max_fireball_scaler
 			else:
@@ -64,7 +65,10 @@ func _physics_process(delta):
 	move_and_slide()
 	update_animations(direction)
 	move_hands()
-	
+	if(Input.is_action_just_pressed("right_click")):
+		gravity=0
+	if(Input.is_action_just_released("right_click")):
+		gravity=starting_gravity
 func update_animations(direction):
 	if(direction > 0):
 			sprite.flip_h = 0;

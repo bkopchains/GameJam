@@ -11,7 +11,7 @@ extends Area2D
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	animation_player.play("loaded")
-	scale = scale;
+	scale = scale*1.5;
 	pass # Replace with function body.
 
 
@@ -20,7 +20,7 @@ func _physics_process(delta):
 	if(is_fired):
 		animation_player.play("fired")
 		global_translate(direction*FIREBALL_SPEED*delta)
-		print("Fireball direction: ",direction)
+
 	pass
 
 
