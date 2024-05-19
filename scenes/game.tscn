@@ -1,6 +1,5 @@
-[gd_scene load_steps=5 format=3 uid="uid://catv2wvjucsjt"]
+[gd_scene load_steps=4 format=3 uid="uid://catv2wvjucsjt"]
 
-[ext_resource type="PackedScene" uid="uid://dhub7dipd1484" path="res://scenes/player.tscn" id="1_287l3"]
 [ext_resource type="Texture2D" uid="uid://cnthpow4h0lcw" path="res://assets/tilemap/tileset2.png" id="2_4k5om"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hoi3x"]
@@ -258,13 +257,6 @@ physics_layer_0/collision_mask = 3
 sources/0 = SubResource("TileSetAtlasSource_hoi3x")
 
 [node name="Game" type="Node2D"]
-
-[node name="CharacterBody2D" parent="." instance=ExtResource("1_287l3")]
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-position = Vector2(0, 8)
-position_smoothing_enabled = true
-position_smoothing_speed = 3.0
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_t4jd6")
