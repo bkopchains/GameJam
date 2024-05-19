@@ -1,28 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://bgjjpmpchu4hb"]
+[gd_scene load_steps=11 format=3 uid="uid://curt8trrfun8"]
 
 [ext_resource type="Texture2D" uid="uid://bpk0db1f68mix" path="res://assets/textures/wizard.png" id="1_hfpjg"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ycjm2"]
+[ext_resource type="Texture2D" uid="uid://b6383eo7ks6fm" path="res://assets/textures/wizard_hands.png" id="3_4mwyn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_n2ymc"]
 radius = 5.0
 height = 15.0
-
-[sub_resource type="Animation" id="Animation_j8mlh"]
-resource_name = "idle"
-length = 2.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.6, 1, 1.2, 1.4, 1.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [12, 13, 14, 15, 12, 12, 13, 15, 12]
-}
 
 [sub_resource type="Animation" id="Animation_r6lwv"]
 length = 0.001
@@ -39,8 +23,8 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_m4yq6"]
-resource_name = "move"
+[sub_resource type="Animation" id="Animation_ff2le"]
+resource_name = "fall"
 length = 0.4
 loop_mode = 1
 tracks/0/type = "value"
@@ -53,7 +37,24 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [8, 9, 10, 11]
+}
+
+[sub_resource type="Animation" id="Animation_j8mlh"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4, 0.6, 1, 1.2, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [12, 13, 14, 15, 12, 12, 13, 15, 12]
 }
 
 [sub_resource type="Animation" id="Animation_7ryer"]
@@ -73,8 +74,8 @@ tracks/0/keys = {
 "values": [4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_ff2le"]
-resource_name = "fall"
+[sub_resource type="Animation" id="Animation_m4yq6"]
+resource_name = "move"
 length = 0.4
 loop_mode = 1
 tracks/0/type = "value"
@@ -87,7 +88,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [8, 9, 10, 11]
+"values": [0, 1, 2, 3]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1t3f3"]
@@ -116,3 +117,8 @@ libraries = {
 "": SubResource("AnimationLibrary_1t3f3")
 }
 autoplay = "idle"
+
+[node name="Hands" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+texture = ExtResource("3_4mwyn")
+offset = Vector2(7, 0)
