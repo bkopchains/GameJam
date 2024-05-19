@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cuoxehd76kq4l"
-path="res://.godot/imported/ball.png-d4a4bcef9ccf03d0071f393bf5d7669c.ctex"
+uid="uid://b6383eo7ks6fm"
+path="res://.godot/imported/wizard_hands.png-0be4492ab7371b73c317fab9da0b6625.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ball.png"
-dest_files=["res://.godot/imported/ball.png-d4a4bcef9ccf03d0071f393bf5d7669c.ctex"]
+source_file="res://assets/textures/wizard_hands.png"
+dest_files=["res://.godot/imported/wizard_hands.png-0be4492ab7371b73c317fab9da0b6625.ctex"]
 
 [params]
 

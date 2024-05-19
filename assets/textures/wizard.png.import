@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dexa1mph3i3f3"
-path="res://.godot/imported/yucky background.png-885a1f06eb55cb61e57530babe1c9591.ctex"
+uid="uid://bpk0db1f68mix"
+path="res://.godot/imported/wizard.png-d9f2740d0e63e69549d212097dcbc61f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/yucky background.png"
-dest_files=["res://.godot/imported/yucky background.png-885a1f06eb55cb61e57530babe1c9591.ctex"]
+source_file="res://assets/textures/wizard.png"
+dest_files=["res://.godot/imported/wizard.png-d9f2740d0e63e69549d212097dcbc61f.ctex"]
 
 [params]
 
