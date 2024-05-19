@@ -1,13 +1,17 @@
 extends Area2D
-const FIREBALL_SPEED =220
+@export var FIREBALL_SPEED =220
 @export var direction = Vector2()
 @export var is_fired= false
 @onready var animation_player = $Sprite2D/AnimationPlayer
+@onready var sprite_2d = $Sprite2D
+@onready var collision_shape_2d = $CollisionShape2D
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	scale = scale*3;
+	animation_player.play("loaded")
+	scale = scale;
 	pass # Replace with function body.
 
 
