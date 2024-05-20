@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://okgdh6lxccmk"]
+[gd_scene load_steps=19 format=3 uid="uid://okgdh6lxccmk"]
 
 [ext_resource type="Script" path="res://scripts/fireball.gd" id="1_1h50n"]
 [ext_resource type="Texture2D" uid="uid://c3nmh7xges1un" path="res://assets/textures/fireball.png" id="2_0n2gv"]
@@ -62,6 +62,43 @@ _data = {
 "loaded": SubResource("Animation_wfh3y")
 }
 
+[sub_resource type="Gradient" id="Gradient_xgf0y"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5veue"]
+gradient = SubResource("Gradient_xgf0y")
+
+[sub_resource type="CurveTexture" id="CurveTexture_jkvya"]
+
+[sub_resource type="Curve" id="Curve_121b1"]
+_data = [Vector2(0, 1), 0.0, 0.181887, 0, 0, Vector2(1, 0.021978), -2.88462, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_t1tok"]
+curve = SubResource("Curve_121b1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qrfh5"]
+lifetime_randomness = 0.31
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector3(0, -1, 0)
+flatness = 0.831
+initial_velocity_max = 20.0
+gravity = Vector3(0, -2, 0)
+scale_min = 0.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_t1tok")
+color = Color(1, 0.640333, 0.17, 1)
+color_ramp = SubResource("GradientTexture1D_5veue")
+emission_curve = SubResource("CurveTexture_jkvya")
+turbulence_noise_scale = 3.633
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
 [sub_resource type="Curve" id="Curve_dy43w"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.89155, 0.0, 0, 0]
 point_count = 2
@@ -106,24 +143,12 @@ libraries = {
 "": SubResource("AnimationLibrary_83b1w")
 }
 
-[node name="Embers" type="CPUParticles2D" parent="Sprite2D"]
+[node name="Embers" type="GPUParticles2D" parent="Sprite2D"]
 position = Vector2(1, 0)
 amount = 48
+process_material = SubResource("ParticleProcessMaterial_qrfh5")
 lifetime = 2.0
 randomness = 1.0
-emission_shape = 1
-emission_sphere_radius = 2.2
-direction = Vector2(0, -1)
-spread = 90.0
-gravity = Vector2(0, -10)
-initial_velocity_max = 5.0
-scale_amount_min = 0.5
-scale_amount_max = 2.0
-scale_amount_curve = SubResource("Curve_dy43w")
-color = Color(1, 0.55, 0, 1)
-color_ramp = SubResource("Gradient_518g5")
-hue_variation_min = -0.35
-hue_variation_max = 0.54
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 scale = Vector2(7.9, 7.9)
