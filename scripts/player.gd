@@ -7,25 +7,28 @@ extends CharacterBody2D
 
 const SPEED = 200.0
 const MAXSPEED = 200.0
-const JUMP_VELOCITY = -400.0
+const JUMP_VELOCITY = -300.0
 const MAX_FALL_SPEED = 400
 
 # fireball vars
 var fireball = null
 var fireball_scene = preload ("res://scenes/fireball.tscn")
 var starting_recoil_speed = 300.0
-var recoil_speed = 500.0
+var recoil_speed = 300.0
 var loading = false
 var time_loaded = 0
-var time_denominator = .2
+var time_denominator = .3
 var fireball_scaler = 1
-var max_fireball_scaler = 2
+var min_fireball_scaler=1
+var max_fireball_scaler = 1.5
 var starting_fireball_speed = 200.0
 var starting_fireball_scale = null
 
 var starting_gravity = 980
 var gravity = 980
 var is_alive = true
+var jump_boost=-20
+var fall_boost=20
 
 func _ready():
 	is_alive = true
@@ -108,6 +111,8 @@ func charge_fireball(delta):
 
 	if (time_loaded / time_denominator > max_fireball_scaler):
 		fireball_scaler = max_fireball_scaler
+	elif(time_loaded / time_denominator < min_fireball_scaler):
+		fireball_scaler = min_fireball_scaler
 	else:
 		fireball_scaler = time_loaded / time_denominator
 	fireball.scale = fireball_scaler * starting_fireball_scale
@@ -125,4 +130,9 @@ func shoot_fireball(normalized):
 	scene_parent.add_child(fireball)
 	fireball.global_position = fireball_pos
 	fireball.global_rotation = fireball_rot
-	velocity += - recoil_speed * normalized
+	if(velocity.y<0):
+		velocity = - recoil_speed * normalized+Vector2(0,jump_boost)
+	elif(velocity.y>MAX_FALL_SPEED):
+				velocity = - recoil_speed * normalized+Vector2(0,fall_boost)
+	else:
+		velocity = - recoil_speed * normalized
