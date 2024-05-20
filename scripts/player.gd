@@ -11,12 +11,22 @@ var fireball = null
 @onready var sprite = $Sprite2D
 var fireball_scene =preload("res://scenes/fireball.tscn")
 @onready var hands = $Hands
+var starting_recoil_speed=300.0
 var recoil_speed=500.0
-
+var loading = false
+var time_loaded=0
+var time_denominator=.2
+var fireball_scaler=1
+var max_fireball_scaler=2
+var starting_fireball_speed=200.0
 # Get the gravity from the project settings to be synced with RigidBody nodes.
+var starting_gravity=980
 var gravity = 980
+var starting_fireball_scale=null
+var is_alive=true
 
-
+func _ready():
+	is_alive=true
 func _physics_process(delta):
 	# Add the gravity.
 	var direction = Input.get_axis("move_left", "move_right")
@@ -39,11 +49,26 @@ func _physics_process(delta):
 			velocity.x = direction * SPEED
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
+	if(loading):
+		if(is_alive):
+			time_loaded+=delta
 
+			if(time_loaded/time_denominator>max_fireball_scaler):
+				fireball_scaler=max_fireball_scaler
+			else:
+				fireball_scaler=time_loaded/time_denominator
+			fireball.scale=fireball_scaler*starting_fireball_scale
+			recoil_speed=fireball_scaler*starting_recoil_speed
+			fireball.FIREBALL_SPEED=fireball_scaler*starting_fireball_speed
+		else:
+			remove_child(fireball)
 	move_and_slide()
 	update_animations(direction)
 	move_hands()
-	
+	if(Input.is_action_just_pressed("right_click")):
+		gravity=0
+	if(Input.is_action_just_released("right_click")):
+		gravity=starting_gravity
 func update_animations(direction):
 	if(direction > 0):
 			sprite.flip_h = 0;
@@ -71,26 +96,34 @@ func move_hands():
 	hands.look_at(mPos);
 	if(Input.is_action_just_pressed("click")):
 		load_fireball(normalized);
-	if(Input.is_action_just_released("click")):
+	if(fireball and Input.is_action_just_released("click")):
 		shoot_fireball(normalized);
+	
 		
 func load_fireball(normalized):
 	fireball=fireball_scene.instantiate()
 	hands.add_child(fireball)
 	fireball.position.x=9
-	print(normalized)
+	starting_fireball_speed=fireball.FIREBALL_SPEED
+	starting_fireball_scale=fireball.scale
+	time_loaded=0
+	loading=true
+	
+
 	
 func shoot_fireball(normalized):
-	var fireball_pos=fireball.global_position
-	var fireball_rot=fireball.global_rotation
-	var scene_parent=get_parent()
-	fireball.direction=normalized
-	fireball.is_fired=true
-	hands.remove_child(fireball)
-	scene_parent.add_child(fireball)
-	fireball.global_position=fireball_pos
-	fireball.global_rotation=fireball_rot
-	velocity+=-recoil_speed*normalized	
+	if(is_alive):
+		var fireball_pos=fireball.global_position
+		var fireball_rot=fireball.global_rotation
+		var scene_parent=get_parent()
+		loading=false
+		fireball.direction=normalized
+		fireball.is_fired=true
+		hands.remove_child(fireball)
+		scene_parent.add_child(fireball)
+		fireball.global_position=fireball_pos
+		fireball.global_rotation=fireball_rot
+		velocity+=-recoil_speed*normalized	
 	
 	
 	
