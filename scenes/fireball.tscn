@@ -52,32 +52,12 @@ tracks/0/keys = {
 "values": [4, 5, 6, 7]
 }
 
-[sub_resource type="Animation" id="Animation_wfh3y"]
-resource_name = "loaded"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [4, 5, 6, 7]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_83b1w"]
 _data = {
 "RESET": SubResource("Animation_tkj5v"),
 "fired": SubResource("Animation_jk4u3"),
 "loaded": SubResource("Animation_wfh3y")
 }
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_68gix"]
-radius = 2.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_68gix"]
 radius = 2.0
@@ -98,10 +78,6 @@ libraries = {
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-texture_filter = 1
-position = Vector2(1, 0)
-shape = SubResource("CircleShape2D_68gix")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 texture_filter = 1
 position = Vector2(1, 0)
