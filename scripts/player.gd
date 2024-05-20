@@ -54,7 +54,7 @@ func _physics_process(delta):
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 	
 	
-	if (loading):
+	if (loading and fireball):
 		charge_fireball(delta);
 	
 	move_and_slide()
@@ -115,6 +115,7 @@ func charge_fireball(delta):
 		fireball_scaler = min_fireball_scaler
 	else:
 		fireball_scaler = time_loaded / time_denominator
+
 	fireball.scale = fireball_scaler * starting_fireball_scale
 	recoil_speed = fireball_scaler * starting_recoil_speed
 	fireball.FIREBALL_SPEED = fireball_scaler * starting_fireball_speed
@@ -123,6 +124,7 @@ func shoot_fireball(normalized):
 	var fireball_pos = fireball.global_position
 	var fireball_rot = fireball.global_rotation
 	var scene_parent = get_parent()
+  
 	loading = false
 	fireball.direction = normalized
 	fireball.is_fired = true
@@ -130,6 +132,13 @@ func shoot_fireball(normalized):
 	scene_parent.add_child(fireball)
 	fireball.global_position = fireball_pos
 	fireball.global_rotation = fireball_rot
+	if(velocity.y<0):
+		velocity = - recoil_speed * normalized+Vector2(0,jump_boost)
+	elif(velocity.y>MAX_FALL_SPEED):
+				velocity = - recoil_speed * normalized+Vector2(0,fall_boost)
+	else:
+		velocity = - recoil_speed * normalized
+
 	if(velocity.y<0):
 		velocity = - recoil_speed * normalized+Vector2(0,jump_boost)
 	elif(velocity.y>MAX_FALL_SPEED):
