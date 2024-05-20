@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkrigfjqjn3on"]
+[gd_scene load_steps=8 format=3 uid="uid://okgdh6lxccmk"]
 
-[ext_resource type="Script" path="res://fireball.gd" id="1_jndlm"]
+[ext_resource type="Script" path="res://scripts/fireball.gd" id="1_1h50n"]
 [ext_resource type="Texture2D" uid="uid://c3nmh7xges1un" path="res://assets/textures/fireball.png" id="2_0n2gv"]
 
 [sub_resource type="Animation" id="Animation_tkj5v"]
@@ -63,7 +63,7 @@ _data = {
 radius = 2.0
 
 [node name="Area2D" type="Area2D"]
-script = ExtResource("1_jndlm")
+script = ExtResource("1_1h50n")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_0n2gv")

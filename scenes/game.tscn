@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://catv2wvjucsjt"]
 
-[ext_resource type="Texture2D" uid="uid://db8oq0pk1vxih" path="res://assets/textures/slugmap.png" id="1_adswq"]
+[ext_resource type="Texture2D" uid="uid://o1gy47e2duqu" path="res://assets/textures/slugmap.png" id="1_adswq"]
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
 [ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="2_qi7gs"]
 
