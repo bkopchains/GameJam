@@ -132,6 +132,12 @@ func shoot_fireball(normalized):
 	scene_parent.add_child(fireball)
 	fireball.global_position = fireball_pos
 	fireball.global_rotation = fireball_rot
+	if(velocity.y<0):
+		velocity = - recoil_speed * normalized+Vector2(0,jump_boost)
+	elif(velocity.y>MAX_FALL_SPEED):
+				velocity = - recoil_speed * normalized+Vector2(0,fall_boost)
+	else:
+		velocity = - recoil_speed * normalized
 
 	if(velocity.y<0):
 		velocity = - recoil_speed * normalized+Vector2(0,jump_boost)
