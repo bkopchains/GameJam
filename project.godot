@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Testing"
+config/name="KwellyBean GameJam"
 run/main_scene="res://scenes/game.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
