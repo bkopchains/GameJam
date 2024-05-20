@@ -92,6 +92,7 @@ func move_hands():
 		load_fireball(normalized);
 	if (fireball and Input.is_action_just_released("click")):
 		shoot_fireball(normalized);
+	
 		
 func load_fireball(normalized):
 	fireball = fireball_scene.instantiate()
