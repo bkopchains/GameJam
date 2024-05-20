@@ -8,7 +8,7 @@ extends Area2D
 
 @onready var collision_timer = $CollisionTimer
 @onready var splash = $Splash
-@onready var embers = $Sprite2D/Embers
+@onready var embers = $Embers
 @onready var light = $PointLight2D
 
 var is_dying = false;
