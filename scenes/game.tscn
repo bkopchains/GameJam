@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
 [ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="2_qi7gs"]
 [ext_resource type="PackedScene" uid="uid://bx8j1s288sc6w" path="res://scenes/torch.tscn" id="4_duoy0"]
+[ext_resource type="PackedScene" uid="uid://5jgnx0kd5cw2" path="res://scenes/bat.tscn" id="5_2mt64"]
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2iiq3"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -377,3 +378,15 @@ position = Vector2(568, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p38n1")
+
+[node name="bat" parent="." instance=ExtResource("5_2mt64")]
+position = Vector2(752, -8)
+
+[node name="bat2" parent="." instance=ExtResource("5_2mt64")]
+position = Vector2(1176, -192)
+
+[node name="bat3" parent="." instance=ExtResource("5_2mt64")]
+position = Vector2(840, -440)
+
+[node name="bat4" parent="." instance=ExtResource("5_2mt64")]
+position = Vector2(376, -944)
