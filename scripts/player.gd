@@ -92,12 +92,12 @@ func move_hands():
 		hands.flip_v = 1;
 	hands.look_at(mPos);
 	if (Input.is_action_just_pressed("click")):
-		load_fireball(normalized);
+		load_fireball();
 	if (fireball and Input.is_action_just_released("click")):
 		shoot_fireball(normalized);
 	
 		
-func load_fireball(normalized):
+func load_fireball():
 	fireball = fireball_scene.instantiate()
 	hands.add_child(fireball)
 	fireball.position.x = 9
