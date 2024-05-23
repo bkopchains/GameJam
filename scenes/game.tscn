@@ -1,8 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://catv2wvjucsjt"]
+[gd_scene load_steps=19 format=3 uid="uid://catv2wvjucsjt"]
 
 [ext_resource type="Texture2D" uid="uid://o1gy47e2duqu" path="res://assets/textures/slugmap.png" id="1_adswq"]
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
 [ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="2_qi7gs"]
+[ext_resource type="PackedScene" uid="uid://dy4ok1pw44v47" path="res://scenes/spider.tscn" id="3_pruqs"]
 [ext_resource type="PackedScene" uid="uid://bx8j1s288sc6w" path="res://scenes/torch.tscn" id="4_duoy0"]
 [ext_resource type="PackedScene" uid="uid://5jgnx0kd5cw2" path="res://scenes/bat.tscn" id="5_2mt64"]
 
@@ -360,20 +361,32 @@ position = Vector2(568, 0)
 
 [node name="Bats" type="Node" parent="Enemies"]
 
-[node name="bat" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+[node name="bat" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(752, -8)
+Player = NodePath("../../../Wizard")
 
-[node name="bat5" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+[node name="bat5" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(488, -215)
+Player = NodePath("../../../Wizard")
 
-[node name="bat2" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+[node name="bat2" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(1176, -192)
+Player = NodePath("../../../Wizard")
 
-[node name="bat3" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+[node name="bat3" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(840, -440)
+Player = NodePath("../../../Wizard")
 
-[node name="bat4" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+[node name="bat4" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(376, -944)
+Player = NodePath("../../../Wizard")
+
+[node name="Spiders" type="Node" parent="Enemies"]
+
+[node name="spider" parent="Enemies/Spiders" node_paths=PackedStringArray("Player") instance=ExtResource("3_pruqs")]
+position = Vector2(308, -39)
+Player = NodePath("../../../Wizard")
+HP = 5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p38n1")
