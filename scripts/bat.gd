@@ -1,18 +1,23 @@
-extends CharacterBody2D
-var player = null
+extends Enemy
+
 var speed=80
 var react_distance=200
+var vec_to_player
 
-# Called when the node enters the scene tree for the first time.
-
-func _ready():
-	player=get_node("../Wizard")
-	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	var vec_to_player=player.global_position-global_position
+	vec_to_player = Player.global_position - global_position
 	var distance_to_player = vec_to_player.length()
-	if(distance_to_player<react_distance):
-		global_position+=speed*vec_to_player.normalized()*delta
+	if(distance_to_player < react_distance):
+		global_position += speed * vec_to_player.normalized() * delta
 
-	
+func _on_hitbox_area_entered(area):
+	hurt();
+	# some sort of knockback
+	global_position -= vec_to_player.normalized() * 10
+	if (HP <= 0):
+		die();
+
+
+func _on_hitbox_body_entered(body): 
+	kill_player(body);

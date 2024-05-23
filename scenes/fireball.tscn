@@ -136,7 +136,7 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 
 [node name="Fireball" type="Area2D"]
-collision_layer = 4
+collision_layer = 8
 collision_mask = 5
 script = ExtResource("1_1h50n")
 
@@ -180,13 +180,15 @@ randomness = 1.0
 position = Vector2(1, 0)
 energy = 2.0
 shadow_enabled = true
+shadow_filter_smooth = 23.2
 texture = SubResource("GradientTexture2D_q7l7x")
 texture_scale = 5.0
 
 [node name="CollisionTimer" type="Timer" parent="."]
+process_callback = 0
 wait_time = 2.0
-one_shot = true
 
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
 [connection signal="timeout" from="CollisionTimer" to="." method="_on_collision_timer_timeout"]

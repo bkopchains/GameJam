@@ -1,0 +1,138 @@
+[gd_scene load_steps=9 format=3 uid="uid://dy4ok1pw44v47"]
+
+[ext_resource type="Script" path="res://scripts/spider.gd" id="1_57ec3"]
+[ext_resource type="Texture2D" uid="uid://blnk74py52j0u" path="res://assets/textures/spider.png" id="2_hskxm"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uyqpe"]
+radius = 6.0
+height = 26.0
+
+[sub_resource type="Animation" id="Animation_5ndv6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_jpoqj"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 6]
+}
+
+[sub_resource type="Animation" id="Animation_qbga1"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0um2j"]
+_data = {
+"RESET": SubResource("Animation_5ndv6"),
+"idle": SubResource("Animation_jpoqj"),
+"walk": SubResource("Animation_qbga1")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a3a7d"]
+radius = 7.0
+height = 28.0
+
+[node name="spider" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_57ec3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+show_behind_parent = true
+position = Vector2(-1, -1)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_uyqpe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_hskxm")
+hframes = 6
+vframes = 2
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_0um2j")
+}
+autoplay = "walk"
+
+[node name="Hitbox" type="Area2D" parent="."]
+show_behind_parent = true
+position = Vector2(-1, 0)
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+show_behind_parent = true
+position = Vector2(0, -1)
+rotation = -1.5708
+shape = SubResource("CapsuleShape2D_a3a7d")
+
+[node name="RayCast2D_R" type="RayCast2D" parent="."]
+position = Vector2(5, 0)
+target_position = Vector2(12, 0)
+
+[node name="RayCast2D_R_D" type="RayCast2D" parent="."]
+position = Vector2(17, 0)
+target_position = Vector2(0, 13)
+
+[node name="RayCast2D_L" type="RayCast2D" parent="."]
+position = Vector2(-6, 0)
+rotation = -3.14159
+target_position = Vector2(12, 0)
+
+[node name="RayCast2D_L_D" type="RayCast2D" parent="."]
+position = Vector2(-17, 0)
+target_position = Vector2(0, 13)
+
+[node name="RayCast2D_R_U" type="RayCast2D" parent="."]
+position = Vector2(17, 0)
+rotation = -3.14159
+target_position = Vector2(0, 13)
+
+[node name="RayCast2D_L_U" type="RayCast2D" parent="."]
+position = Vector2(-17, 0)
+rotation = 3.14159
+target_position = Vector2(0, 13)
+
+[node name="HesitateTimer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="timeout" from="HesitateTimer" to="." method="_on_hesitate_timer_timeout"]

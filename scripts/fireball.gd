@@ -36,13 +36,21 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 	pass # Replace with function body.
 
+
+func _on_area_entered(area):
+	on_collision();
 func _on_body_entered(body):
+	on_collision();
+	
+func _on_collision_timer_timeout():
+		queue_free();
+
+func on_collision():
 	if(is_fired):
+		set_deferred("monitorable", false) 
 		is_dying = true;
 		sprite_2d.visible = false;
 		embers.emitting = false;
 		splash.restart();
 		collision_timer.start();
 
-func _on_collision_timer_timeout():
-		queue_free();
