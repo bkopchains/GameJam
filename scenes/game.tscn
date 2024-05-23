@@ -388,6 +388,13 @@ position = Vector2(308, -39)
 Player = NodePath("../../../Wizard")
 HP = 5
 
+[node name="spider2" parent="Enemies/Spiders" node_paths=PackedStringArray("Player") instance=ExtResource("3_pruqs")]
+position = Vector2(163, -73)
+rotation = 3.14159
+on_ceiling = true
+Player = NodePath("../../../Wizard")
+HP = 5
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p38n1")
 
