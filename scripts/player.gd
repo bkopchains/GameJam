@@ -37,6 +37,7 @@ var jump_boost=-20
 var fall_boost=20
 var on_floor = false;
 var on_wall = false;
+var collision_info: KinematicCollision2D = null;
 
 func _ready():
 	is_alive = true
@@ -52,6 +53,11 @@ func _physics_process(delta):
 			or is_bubbled
 		):
 			move.x += direction * ACCELERATION * delta
+		
+		if(on_wall and Input.is_action_just_pressed("jump") and collision_info):
+			on_wall = false;
+			move.y = JUMP_VELOCITY;
+			move.x = collision_info.get_normal().x * SPEED;
 	else:
 		move.y = 1;
 		# Handle jump.
@@ -70,7 +76,7 @@ func _physics_process(delta):
 	if (loading and fireball):
 		charge_fireball(delta);
 	
-	var collision_info = move_and_collide(move * delta, false, 0.01)
+	collision_info = move_and_collide(move * delta, false, 0.01)
 	if (Input.is_action_pressed("right_click")):
 		is_bubbled = true;
 		bubble.visible = true;
