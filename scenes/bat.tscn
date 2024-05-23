@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://5jgnx0kd5cw2"]
+[gd_scene load_steps=8 format=3 uid="uid://5jgnx0kd5cw2"]
 
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_cmqfy"]
 [ext_resource type="Texture2D" uid="uid://bbf5lcs13ffu1" path="res://assets/textures/bat.png" id="2_ojsej"]
-[ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="3_m7ubq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fboqd"]
 radius = 11.0
@@ -67,12 +66,13 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="Killzone" parent="." instance=ExtResource("3_m7ubq")]
+[node name="Hitbox" type="Area2D" parent="."]
 collision_mask = 10
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_tqjgw")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
-[connection signal="area_entered" from="Killzone" to="." method="_on_killzone_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

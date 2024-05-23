@@ -364,7 +364,7 @@ position = Vector2(568, 0)
 position = Vector2(752, -8)
 
 [node name="bat5" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
-position = Vector2(213, -39)
+position = Vector2(488, -215)
 
 [node name="bat2" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
 position = Vector2(1176, -192)
@@ -400,7 +400,10 @@ position = Vector2(112, -49)
 [node name="Camera2D" type="Camera2D" parent="Wizard"]
 rotation = -3.14159
 scale = Vector2(116.244, 2.59999)
+process_callback = 0
 limit_bottom = 100
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 z_index = -1

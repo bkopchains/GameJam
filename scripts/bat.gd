@@ -18,9 +18,15 @@ func _physics_process(delta):
 func _on_area_entered(area):
 	pass;
 
-func _on_killzone_area_entered(area):
+func _on_hitbox_area_entered(area):
 	HP -=1;
 	# some sort of knockback
 	global_position -= speed * vec_to_player.normalized() * _delta * 10 
 	if (HP == 0):
 		queue_free();
+
+
+func _on_hitbox_body_entered(body): 
+	body.is_alive=false
+	body.get_node("CollisionShape2D").queue_free();
+	get_tree().reload_current_scene();
