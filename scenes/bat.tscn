@@ -1,8 +1,26 @@
-[gd_scene load_steps=8 format=3 uid="uid://5jgnx0kd5cw2"]
+[gd_scene load_steps=9 format=3 uid="uid://5jgnx0kd5cw2"]
 
 [ext_resource type="Script" path="res://scripts/bat.gd" id="1_cmqfy"]
 [ext_resource type="Texture2D" uid="uid://bbf5lcs13ffu1" path="res://assets/textures/bat.png" id="2_ojsej"]
 [ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="3_m7ubq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fboqd"]
+radius = 11.0
+
+[sub_resource type="Animation" id="Animation_5ndv6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_jpoqj"]
 resource_name = "idle"
@@ -21,21 +39,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_5ndv6"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0um2j"]
 _data = {
 "RESET": SubResource("Animation_5ndv6"),
@@ -45,8 +48,14 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_tqjgw"]
 radius = 13.0384
 
-[node name="bat" type="CharacterBody2D"]
+[node name="bat" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
 script = ExtResource("1_cmqfy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_fboqd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_ojsej")
@@ -59,7 +68,11 @@ libraries = {
 autoplay = "idle"
 
 [node name="Killzone" parent="." instance=ExtResource("3_m7ubq")]
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Killzone"]
 position = Vector2(0, -1)
 shape = SubResource("CircleShape2D_tqjgw")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Killzone" to="." method="_on_killzone_area_entered"]

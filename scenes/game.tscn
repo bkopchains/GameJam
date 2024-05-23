@@ -1,10 +1,23 @@
-[gd_scene load_steps=16 format=3 uid="uid://catv2wvjucsjt"]
+[gd_scene load_steps=18 format=3 uid="uid://catv2wvjucsjt"]
 
 [ext_resource type="Texture2D" uid="uid://o1gy47e2duqu" path="res://assets/textures/slugmap.png" id="1_adswq"]
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
 [ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="2_qi7gs"]
 [ext_resource type="PackedScene" uid="uid://bx8j1s288sc6w" path="res://scenes/torch.tscn" id="4_duoy0"]
 [ext_resource type="PackedScene" uid="uid://5jgnx0kd5cw2" path="res://scenes/bat.tscn" id="5_2mt64"]
+
+[sub_resource type="Environment" id="Environment_p38n1"]
+background_mode = 3
+background_energy_multiplier = 1.5
+glow_levels/1 = 2.86
+glow_levels/2 = 2.86
+glow_levels/3 = 5.72
+glow_levels/4 = 11.62
+glow_levels/5 = 7.91
+glow_intensity = 3.48
+glow_strength = 1.21
+glow_blend_mode = 0
+glow_hdr_threshold = 0.5
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2iiq3"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -25,6 +38,9 @@ polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_fdfl5"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_a82lo"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k4xho"]
@@ -305,6 +321,7 @@ texture = ExtResource("1_adswq")
 8:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 8:0/0/physics_layer_0/angular_velocity = 0.0
 9:0/0 = 0
+9:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_a82lo")
 9:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 9:0/0/physics_layer_0/angular_velocity = 0.0
 9:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -317,15 +334,49 @@ sources/0 = SubResource("TileSetAtlasSource_k4xho")
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_6do8m"]
 
-[sub_resource type="Environment" id="Environment_p38n1"]
-background_mode = 3
-glow_enabled = true
-glow_intensity = 5.31
-glow_strength = 1.21
-glow_blend_mode = 0
-glow_hdr_scale = 0.5
-
 [node name="Game" type="Node2D"]
+
+[node name="Lighting" type="Node" parent="."]
+
+[node name="Torch" parent="Lighting" groups=["lighting"] instance=ExtResource("4_duoy0")]
+position = Vector2(171, -32)
+
+[node name="Torch2" parent="Lighting" groups=["lighting"] instance=ExtResource("4_duoy0")]
+position = Vector2(312, -64)
+
+[node name="Torch3" parent="Lighting" groups=["lighting"] instance=ExtResource("4_duoy0")]
+position = Vector2(680, 0)
+
+[node name="Torch4" parent="Lighting" groups=["lighting"] instance=ExtResource("4_duoy0")]
+position = Vector2(448, -16)
+
+[node name="Torch5" parent="Lighting" groups=["lighting"] instance=ExtResource("4_duoy0")]
+position = Vector2(568, -80)
+
+[node name="Torch6" parent="Lighting" groups=["lighting"] instance=ExtResource("4_duoy0")]
+position = Vector2(568, 0)
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Bats" type="Node" parent="Enemies"]
+
+[node name="bat" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+position = Vector2(752, -8)
+
+[node name="bat5" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+position = Vector2(213, -39)
+
+[node name="bat2" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+position = Vector2(1176, -192)
+
+[node name="bat3" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+position = Vector2(840, -440)
+
+[node name="bat4" parent="Enemies/Bats" instance=ExtResource("5_2mt64")]
+position = Vector2(376, -944)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_p38n1")
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(128, 16)
@@ -344,8 +395,7 @@ position = Vector2(0, 88)
 shape = SubResource("WorldBoundaryShape2D_6do8m")
 
 [node name="Wizard" parent="." instance=ExtResource("2_ejnkn")]
-position = Vector2(112, -16)
-ACCELERATION = 1000
+position = Vector2(112, -49)
 
 [node name="Camera2D" type="Camera2D" parent="Wizard"]
 rotation = -3.14159
@@ -355,38 +405,3 @@ limit_bottom = 100
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 z_index = -1
 color = Color(0.499435, 0.596013, 0.704586, 1)
-
-[node name="Lighting" type="Node" parent="."]
-
-[node name="Torch" parent="Lighting" instance=ExtResource("4_duoy0")]
-position = Vector2(168, -32)
-
-[node name="Torch2" parent="Lighting" instance=ExtResource("4_duoy0")]
-position = Vector2(312, -64)
-
-[node name="Torch3" parent="Lighting" instance=ExtResource("4_duoy0")]
-position = Vector2(680, 0)
-
-[node name="Torch4" parent="Lighting" instance=ExtResource("4_duoy0")]
-position = Vector2(448, -16)
-
-[node name="Torch5" parent="Lighting" instance=ExtResource("4_duoy0")]
-position = Vector2(568, -80)
-
-[node name="Torch6" parent="Lighting" instance=ExtResource("4_duoy0")]
-position = Vector2(568, 0)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_p38n1")
-
-[node name="bat" parent="." instance=ExtResource("5_2mt64")]
-position = Vector2(752, -8)
-
-[node name="bat2" parent="." instance=ExtResource("5_2mt64")]
-position = Vector2(1176, -192)
-
-[node name="bat3" parent="." instance=ExtResource("5_2mt64")]
-position = Vector2(840, -440)
-
-[node name="bat4" parent="." instance=ExtResource("5_2mt64")]
-position = Vector2(376, -944)
