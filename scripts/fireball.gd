@@ -1,6 +1,6 @@
 extends Area2D
 @export var FIREBALL_SPEED =220
-@export var direction = Vector2()
+@export var direction: Vector2 = Vector2()
 @export var is_fired= false
 @onready var animation_player = $Sprite2D/AnimationPlayer
 @onready var sprite_2d = $Sprite2D
@@ -24,6 +24,10 @@ func _ready():
 func _physics_process(delta):
 	if(is_fired and !is_dying):
 		animation_player.play("fired")
+		var gravity = 0.02 * (1/scale.x);
+		direction.y += gravity; # "so-called gravity"
+		rotation = position.angle_to_point(position + direction)
+		#rotation_degrees += 0.5 if direction.x > 0 else -0.5 
 		global_translate(direction*FIREBALL_SPEED*delta)
 	
 	if(is_dying and light.energy > 0):
