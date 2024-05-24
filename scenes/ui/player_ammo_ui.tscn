@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://5q42ivhmhq5j"]
+
+[ext_resource type="Texture2D" uid="uid://dsgto0um6paqr" path="res://assets/textures/fireball_ammo_empty.png" id="1_fjdhq"]
+[ext_resource type="Script" path="res://scripts/ui/player_ammo_ui.gd" id="1_lhimb"]
+[ext_resource type="Texture2D" uid="uid://c2nljwmfa6gd2" path="res://assets/textures/fireball_ammo.png" id="2_nl0sh"]
+
+[node name="PlayerAmmoUI" type="CanvasLayer"]
+script = ExtResource("1_lhimb")
+
+[node name="AmmoUI_Empty" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 20.0
+offset_bottom = 8.0
+texture = ExtResource("1_fjdhq")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AmmoUI_Full" type="TextureRect" parent="."]
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 20.0
+offset_bottom = 8.0
+texture = ExtResource("2_nl0sh")
+expand_mode = 1
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AmmoReload_Back" type="ColorRect" parent="."]
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 20.0
+offset_bottom = 10.0
+color = Color(0.85098, 0.85098, 0.85098, 0.94902)
+
+[node name="AmmoReload_Progress" type="ColorRect" parent="."]
+offset_left = 2.0
+offset_top = 9.0
+offset_right = 20.0
+offset_bottom = 10.0
+color = Color(0.984314, 0.54902, 0.215686, 1)
+
+[node name="AmmoReload_Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true

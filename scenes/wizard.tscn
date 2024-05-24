@@ -163,3 +163,10 @@ offset = Vector2(7, 0)
 [node name="Bubble" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("4_6t0sk")
+
+[node name="Fireball_Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="Fireball_Timer" to="." method="_on_fireball_timer_timeout"]

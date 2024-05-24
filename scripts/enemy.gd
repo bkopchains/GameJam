@@ -3,11 +3,15 @@ extends Area2D
 
 @export var Player : CharacterBody2D 
 @export var HP : int;
+@export var XP : int;
+
+signal reward(XP);
 
 func hurt():
 	HP -= 1;
 
 func die():
+	reward.emit(XP);
 	queue_free();
 
 func kill_player(body: Node2D):

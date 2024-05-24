@@ -14,7 +14,7 @@ func _physics_process(delta):
 func _on_hitbox_area_entered(area):
 	hurt();
 	# some sort of knockback
-	global_position -= vec_to_player.normalized() * 10
+	#global_position -= vec_to_player.normalized() * 10
 	if (HP <= 0):
 		die();
 
