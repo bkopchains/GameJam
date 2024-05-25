@@ -783,36 +783,39 @@ position = Vector2(616, 176)
 [node name="bat" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(752, -8)
 Player = NodePath("../../../Wizard")
+HP = 0.0
 
 [node name="bat5" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(488, -215)
 Player = NodePath("../../../Wizard")
+HP = 0.0
 
 [node name="bat2" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(1176, -192)
 Player = NodePath("../../../Wizard")
+HP = 0.0
 
 [node name="bat3" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(840, -440)
 Player = NodePath("../../../Wizard")
+HP = 0.0
 
 [node name="bat4" parent="Enemies/Bats" node_paths=PackedStringArray("Player") instance=ExtResource("5_2mt64")]
 position = Vector2(376, -944)
 Player = NodePath("../../../Wizard")
+HP = 0.0
 
 [node name="Spiders" type="Node" parent="Enemies"]
 
 [node name="spider" parent="Enemies/Spiders" node_paths=PackedStringArray("Player") instance=ExtResource("3_pruqs")]
 position = Vector2(356, 137)
 Player = NodePath("../../../Wizard")
-HP = 5
 
 [node name="spider2" parent="Enemies/Spiders" node_paths=PackedStringArray("Player") instance=ExtResource("3_pruqs")]
 position = Vector2(211, 103)
 rotation = 3.14159
 on_ceiling = true
 Player = NodePath("../../../Wizard")
-HP = 5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_p38n1")

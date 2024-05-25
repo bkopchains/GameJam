@@ -13,15 +13,15 @@ var starting_fireball_scale = null
 @onready var label = $Label
 
 func _ready():
-	scene = preload("res://scenes/spells/projectiles/fireball.tscn")
-	ammo = 3;
-	max_ammo = 3;
-	print("switched to fireball")
+	scene = preload("res://scenes/spells/projectiles/fireball+.tscn")
+	ammo = 5;
+	max_ammo = 5;
+	print("switched to fireball+")
 
 func load_spell():
-	projectile = scene.instantiate()
-	projectile.type = "fireball";
-	projectile.damage = 1;
+	projectile = scene.instantiate();
+	projectile.type = "fireball+";
+	projectile.damage = 1.5;
 	add_child(projectile)
 	projectile.position.x = 9
 	starting_fireball_speed = projectile.FIREBALL_SPEED

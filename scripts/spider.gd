@@ -22,6 +22,8 @@ var react_distance = 200;
 var paused = false;
 
 func _ready():
+	HP = 5.0;
+	MAX_HP = 5.0;
 	dir = -1 if on_ceiling else 1;
 	rcVerticalR = rcRU if on_ceiling else rcRD;
 	rcVerticalL = rcLU if on_ceiling else rcLD;
@@ -41,7 +43,8 @@ func _physics_process(delta):
 		global_position.x += speed * delta * dir;
 
 func _on_hitbox_area_entered(area):
-	hurt();
+	print(area.type)
+	hurt(area.damage);
 	if (HP <= 0):
 		die();
 

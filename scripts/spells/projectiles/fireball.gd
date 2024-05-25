@@ -1,4 +1,4 @@
-extends Area2D
+extends Projectile
 @export var FIREBALL_SPEED =220
 @export var direction: Vector2 = Vector2()
 @export var is_fired= false

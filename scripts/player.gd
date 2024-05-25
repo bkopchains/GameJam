@@ -20,39 +20,29 @@ var move: Vector2 = Vector2()
 var starting_gravity = 980
 var gravity = 980
 var is_alive = true
-var jump_boost=-20
-var fall_boost=20
+var jump_boost = -20
+var fall_boost = 20
 var on_floor = false;
 var on_wall = false;
 var collision_info: KinematicCollision2D = null;
 
 #spell vars
+var current_spell_idx: int = 0;
 var spell: Spell;
 var aim_direction: Vector2 = Vector2();
-var spells: Dictionary = {"fireball" : preload("res://scenes/spells/fireball.tscn")}
+var spells: Dictionary = {
+	"fireball" : preload("res://scenes/spells/fireball.tscn"),
+	"fireball+" : preload("res://scenes/spells/fireball+.tscn")
+}
 
 # signals
 signal ammo_changed(value);
-signal ammo_max_changed();
+signal ammo_max_changed(value);
 signal reload_started(time);
 
 func _ready():
 	is_alive = true
-	
-	# get starting spell
-	var new_spell: Spell = spells["fireball"].instantiate();
-	new_spell.initialize(self);
-	# clear spell to be safe
-	if(spell):
-		spell.queue_free();
-	# equip the spell
-	hands.add_child(new_spell);
-	new_spell.ammo_changed.connect(update_ammo);
-	new_spell.recoil.connect(recoil);
-	emit_signal("ammo_changed", 0);
-	emit_signal("ammo_max_changed", new_spell.max_ammo);
-	# save the reference
-	spell = new_spell;
+	switch_spell(current_spell_idx);
 	
 func _physics_process(delta):
 	# Add the gravity.
@@ -90,12 +80,12 @@ func _physics_process(delta):
 		else:
 			move.x = move_toward(velocity.x, 0, SPEED)
 	
-	
 	if (spell and spell.charging and spell.projectile):
 		spell.charge_spell(delta);
 	
 	collision_info = move_and_collide(move * delta, false, 0.01)
 	if (Input.is_action_pressed("right_click")):
+		emit_signal("ammo_max_changed", spell.ammo+1);
 		is_bubbled = true;
 		bubble.visible = true;
 		if collision_info:
@@ -119,6 +109,11 @@ func _physics_process(delta):
 			on_wall = false;
 			on_floor = false;
 		
+	if(Input.is_action_just_pressed("next_spell")):
+		switch_spell((current_spell_idx+1) % spells.size());
+	if(Input.is_action_just_pressed("prev_spell")):
+		switch_spell((current_spell_idx-1) % spells.size());
+	
 	update_animations(direction);
 	move_hands();
 	
@@ -149,6 +144,28 @@ func update_animations(direction):
 			anim.play("fall")
 		else:
 			anim.play("jump")
+
+func switch_spell(idx: int):
+	# get starting spell
+	current_spell_idx = idx;
+	var spell_key = spells.keys()[idx];
+	var new_spell: Spell = spells[spell_key].instantiate();
+	new_spell.initialize(self);
+	# clear spell to be safe
+	if(spell):
+		spell.queue_free();
+	# equip the spell
+	hands.add_child(new_spell);
+	new_spell.ammo_changed.connect(update_ammo);
+	new_spell.recoil.connect(recoil);
+	if(spell and new_spell.max_ammo < spell.ammo):
+		new_spell.ammo = spell.max_ammo;
+	elif(spell):
+		new_spell.ammo = spell.ammo;
+	emit_signal("ammo_changed", new_spell.ammo);
+	emit_signal("ammo_max_changed", new_spell.max_ammo);
+	# save the reference
+	spell = new_spell;
 
 func move_hands():
 	var mPos = get_global_mouse_position();

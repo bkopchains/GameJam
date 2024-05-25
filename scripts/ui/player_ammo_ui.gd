@@ -39,8 +39,11 @@ func change_texture(value):
 	if(ammo >= 0 and ammo <= max_ammo):
 		ammo_ui_full.size.x = ammo * sprite_width;
 
-func change_max():
-	ammo = player.ammo;
-	max_ammo = player.max_ammo
+func change_max(value):
+	max_ammo = value;
 	ammo_ui_empty.size.x = max_ammo * sprite_width;
-	ammo_ui_full.size.x = ammo * sprite_width
+	ammo_ui_full.size.x = ammo * sprite_width;
+	
+	progress_width = max_ammo * sprite_width
+	ammo_reload_back.size.x = progress_width;
+	ammo_reload_progress.size.x = round(progress) if ammo < max_ammo else 0;

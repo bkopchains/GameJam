@@ -2,7 +2,7 @@ class_name Spell;
 extends Node2D;
 
 var scene : PackedScene;
-var projectile : Area2D;
+var projectile : Projectile;
 var player: CharacterBody2D;
 var ammo: int;
 var max_ammo: int;
