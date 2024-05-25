@@ -12,22 +12,6 @@ const MAXSPEED = 200.0
 const JUMP_VELOCITY = -300.0
 const MAX_FALL_SPEED = 400
 
-# fireball vars
-@export var max_ammo = 3;
-@export var ammo = 3;
-var fireball = null
-var fireball_scene = preload ("res://scenes/fireball.tscn")
-var starting_recoil_speed = 300.0
-var recoil_speed = 300.0
-var loading = false
-var time_loaded = 0
-var time_denominator = .3
-var fireball_scaler = 1
-var min_fireball_scaler=1
-var max_fireball_scaler = 1.5
-var starting_fireball_speed = 200.0
-var starting_fireball_scale = null
-
 #bubble vars
 var is_bubbled = false;
 
@@ -42,6 +26,11 @@ var on_floor = false;
 var on_wall = false;
 var collision_info: KinematicCollision2D = null;
 
+#spell vars
+var spell: Spell;
+var aim_direction: Vector2 = Vector2();
+var spells: Dictionary = {"fireball" : preload("res://scenes/spells/fireball.tscn")}
+
 # signals
 signal ammo_changed(value);
 signal ammo_max_changed();
@@ -49,6 +38,22 @@ signal reload_started(time);
 
 func _ready():
 	is_alive = true
+	
+	# get starting spell
+	var new_spell: Spell = spells["fireball"].instantiate();
+	new_spell.initialize(self);
+	# clear spell to be safe
+	if(spell):
+		spell.queue_free();
+	# equip the spell
+	hands.add_child(new_spell);
+	new_spell.ammo_changed.connect(update_ammo);
+	new_spell.recoil.connect(recoil);
+	emit_signal("ammo_changed", 0);
+	emit_signal("ammo_max_changed", new_spell.max_ammo);
+	# save the reference
+	spell = new_spell;
+	
 func _physics_process(delta):
 	# Add the gravity.
 	var direction = Input.get_axis("move_left", "move_right")
@@ -86,8 +91,8 @@ func _physics_process(delta):
 			move.x = move_toward(velocity.x, 0, SPEED)
 	
 	
-	if (loading and fireball):
-		charge_fireball(delta);
+	if (spell and spell.charging and spell.projectile):
+		spell.charge_spell(delta);
 	
 	collision_info = move_and_collide(move * delta, false, 0.01)
 	if (Input.is_action_pressed("right_click")):
@@ -117,7 +122,7 @@ func _physics_process(delta):
 	update_animations(direction);
 	move_hands();
 	
-	if(ammo < max_ammo and fireball_timer.time_left == 0):
+	if(spell.ammo < spell.max_ammo and fireball_timer.time_left == 0):
 		var timer_length = 1.5 # + (float(ammo)/float(max_ammo))
 		reload_started.emit(timer_length);
 		fireball_timer.start(timer_length);
@@ -147,70 +152,30 @@ func update_animations(direction):
 
 func move_hands():
 	var mPos = get_global_mouse_position();
-	var normalized = (mPos - position).normalized();
-	if (normalized.x > 0):
+	aim_direction = (mPos - position).normalized();
+	if (aim_direction.x > 0):
 		hands.flip_v = 0;
-	elif (normalized.x < 0):
+	elif (aim_direction.x < 0):
 		hands.flip_v = 1;
 	hands.look_at(mPos);
-	if(ammo > 0):
+	if(spell.ammo > 0):
 		if (Input.is_action_just_pressed("click")):
-			load_fireball();
-		if (fireball and loading and Input.is_action_just_released("click")):
-			shoot_fireball(normalized);
+			spell.load_spell();
+		if (spell.projectile and spell.charging and Input.is_action_just_released("click")):
+			spell.shoot_spell();
 
-func load_fireball():
-	fireball = fireball_scene.instantiate()
-	hands.add_child(fireball)
-	fireball.position.x = 9
-	starting_fireball_speed = fireball.FIREBALL_SPEED
-	starting_fireball_scale = fireball.scale
-	time_loaded = 0
-	loading = true
-
-func charge_fireball(delta):
-	time_loaded += delta
-
-	if (time_loaded / time_denominator > max_fireball_scaler):
-		fireball_scaler = max_fireball_scaler
-	elif(time_loaded / time_denominator < min_fireball_scaler):
-		fireball_scaler = min_fireball_scaler
-	else:
-		fireball_scaler = time_loaded / time_denominator
-
-	fireball.scale = fireball_scaler * starting_fireball_scale
-	recoil_speed = fireball_scaler * starting_recoil_speed
-	fireball.FIREBALL_SPEED = fireball_scaler * starting_fireball_speed
-
-func shoot_fireball(normalized):
-	var fireball_pos = fireball.global_position
-	var fireball_rot = fireball.global_rotation
-	var scene_parent = get_parent()
-  
-	spend_ammo();
-	
-	loading = false
-	fireball.direction = normalized
-	fireball.is_fired = true
-	hands.remove_child(fireball)
-	scene_parent.add_child(fireball)
-	fireball.global_position = fireball_pos
-	fireball.global_rotation = fireball_rot
+func recoil(recoil_speed):
 	on_floor = false;
 	if(velocity.y<0):
-		move =- recoil_speed * normalized+Vector2(0,jump_boost)
+		move =- recoil_speed * aim_direction+Vector2(0,jump_boost)
 	elif(velocity.y>MAX_FALL_SPEED):
-				move =- recoil_speed * normalized+Vector2(0,fall_boost)
+				move =- recoil_speed * aim_direction+Vector2(0,fall_boost)
 	else:
-		move =- recoil_speed * normalized
+		move =- recoil_speed * aim_direction
 
+# TODO: move into spell
 func _on_fireball_timer_timeout():
-	add_ammo();
-	
-	
-func add_ammo():
-	ammo += 1;
-	ammo_changed.emit(ammo);
-func spend_ammo():
-	ammo -= 1;
-	ammo_changed.emit(ammo);
+	spell.add_ammo();
+
+func update_ammo(value):
+	ammo_changed.emit(value);
