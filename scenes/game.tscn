@@ -14,6 +14,21 @@
 [ext_resource type="Texture2D" uid="uid://dr7tnee4klf07" path="res://assets/textures/bkg/mountains.png" id="10_l452d"]
 [ext_resource type="PackedScene" uid="uid://5q42ivhmhq5j" path="res://scenes/ui/player_ammo_ui.tscn" id="11_npb7l"]
 
+[sub_resource type="Animation" id="Animation_25n41"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_1wpvk"]
 resource_name = "sparkle"
 length = 5.0
@@ -31,7 +46,17 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4]
 }
 
-[sub_resource type="Animation" id="Animation_25n41"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_to8by"]
+_data = {
+"RESET": SubResource("Animation_25n41"),
+"sparkle": SubResource("Animation_1wpvk")
+}
+
+[sub_resource type="Curve" id="Curve_j3570"]
+_data = [Vector2(0, 0.985635), 0.0, 0.0, 0, 0, Vector2(1, 0.00883985), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Animation" id="Animation_fgxhn"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -45,16 +70,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_to8by"]
-_data = {
-"RESET": SubResource("Animation_25n41"),
-"sparkle": SubResource("Animation_1wpvk")
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
-
-[sub_resource type="Curve" id="Curve_j3570"]
-_data = [Vector2(0, 0.985635), 0.0, 0.0, 0, 0, Vector2(1, 0.00883985), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="Animation" id="Animation_jwomw"]
 resource_name = "star"
@@ -85,33 +112,6 @@ tracks/1/keys = {
 "values": [true, true, false]
 }
 
-[sub_resource type="Animation" id="Animation_fgxhn"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cg15v"]
 _data = {
 "RESET": SubResource("Animation_fgxhn"),
@@ -127,11 +127,13 @@ glow_levels/2 = 2.86
 glow_levels/3 = 5.72
 glow_levels/4 = 11.62
 glow_levels/5 = 7.91
-glow_intensity = 3.48
-glow_strength = 1.21
+glow_intensity = 0.45
+glow_strength = 0.67
 glow_blend_mode = 0
-glow_hdr_threshold = 0.9
-glow_hdr_scale = 1.9
+glow_hdr_threshold = 0.42
+glow_hdr_scale = 0.91
+glow_hdr_luminance_cap = 0.01
+glow_map_strength = 0.71
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_2iiq3"]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -731,6 +733,7 @@ texture = ExtResource("9_ucrr8")
 centered = false
 
 [node name="ShootingStar" type="ParallaxLayer" parent="ParallaxBackground"]
+visible = false
 motion_scale = Vector2(0.05, 1)
 motion_mirroring = Vector2(320, 0)
 
