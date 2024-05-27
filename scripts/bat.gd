@@ -10,7 +10,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	vec_to_player = Player.global_position - global_position
+	vec_to_player = player.global_position - global_position
 	var distance_to_player = vec_to_player.length()
 	if(distance_to_player < react_distance):
 		global_position += speed * vec_to_player.normalized() * delta

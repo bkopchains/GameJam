@@ -1,7 +1,6 @@
 extends Projectile
-@export var FIREBALL_SPEED =220
+@export var FIREBALL_SPEED = 220
 @export var direction: Vector2 = Vector2()
-@export var is_fired= false
 @onready var animation_player = $Sprite2D/AnimationPlayer
 @onready var sprite_2d = $Sprite2D
 @onready var collision_shape_2d = $CollisionShape2D
@@ -11,7 +10,6 @@ extends Projectile
 @onready var embers = $Embers
 @onready var light = $PointLight2D
 
-var is_dying = false;
 
 
 # Called when the node enters the scene tree for the first time.
@@ -24,8 +22,11 @@ func _ready():
 func _physics_process(delta):
 	if(is_fired and !is_dying):
 		animation_player.play("fired")
-		var gravity = 0.02 * (1/scale.x);
-		direction.y += gravity; # "so-called gravity"
+		
+		if(Global_Constants.SPELL_GRAVITY_ENABLED):
+			var gravity = 0.02 * (1/scale.x);
+			direction.y += gravity; # "so-called gravity"
+		
 		rotation = position.angle_to_point(position + direction)
 		#rotation_degrees += 0.5 if direction.x > 0 else -0.5 
 		global_translate(direction*FIREBALL_SPEED*delta)
@@ -50,8 +51,9 @@ func _on_collision_timer_timeout():
 		queue_free();
 
 func on_collision():
-	if(is_fired):
-		set_deferred("monitorable", false) 
+	if(!is_dying and is_fired):
+		set_deferred("monitorable", false)
+		is_fired = false;
 		is_dying = true;
 		sprite_2d.visible = false;
 		embers.emitting = false;

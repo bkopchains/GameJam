@@ -10,8 +10,6 @@ var max_fireball_scaler = 1.5
 var starting_fireball_speed = 200.0
 var starting_fireball_scale = null
 
-@onready var label = $Label
-
 func _ready():
 	scene = preload("res://scenes/spells/projectiles/fireball.tscn")
 	ammo = 3;

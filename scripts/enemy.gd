@@ -1,7 +1,7 @@
 class_name Enemy
 extends Area2D
 
-@export var Player : CharacterBody2D 
+@export var player : Player 
 @export var MAX_HP : float;
 @export var HP : float;
 @export var XP : int;
@@ -26,7 +26,7 @@ func die():
 	queue_free();
 
 func kill_player(body: Node2D):
-	if(body.name == Player.name):
+	if(body.name == player.name):
 		body.is_alive=false;
 		body.get_node("CollisionShape2D").queue_free();
 		get_tree().reload_current_scene();

@@ -1,10 +1,11 @@
+class_name Player
 extends CharacterBody2D
 
 @export var ACCELERATION = 500
 @onready var anim = $Sprite2D/AnimationPlayer
 @onready var sprite = $Sprite2D
 @onready var bubble = $Bubble
-@onready var hands = $Hands
+@onready var hands: Sprite2D = $Hands
 @onready var fireball_timer = $Fireball_Timer
 
 const SPEED = 200.0
@@ -30,10 +31,7 @@ var collision_info: KinematicCollision2D = null;
 var current_spell_idx: int = 0;
 var spell: Spell;
 var aim_direction: Vector2 = Vector2();
-var spells: Dictionary = {
-	"fireball" : preload("res://scenes/spells/fireball.tscn"),
-	"fireball+" : preload("res://scenes/spells/fireball+.tscn")
-}
+var spells: Dictionary;
 
 # signals
 signal ammo_changed(value);
@@ -41,8 +39,12 @@ signal ammo_max_changed(value);
 signal reload_started(time);
 
 func _ready():
+	spells = Global_Constants.STARTING_SPELLS.duplicate(true);
 	is_alive = true
 	switch_spell(current_spell_idx);
+	
+	# dialog test
+	var layout = Dialogic.start("hello");
 	
 func _physics_process(delta):
 	# Add the gravity.
@@ -79,8 +81,9 @@ func _physics_process(delta):
 			move.x = direction * SPEED
 		else:
 			move.x = move_toward(velocity.x, 0, SPEED)
+
 	
-	if (spell and spell.charging and spell.projectile):
+	if (spell and spell.charging and is_instance_valid(spell.projectile)):
 		spell.charge_spell(delta);
 	
 	collision_info = move_and_collide(move * delta, false, 0.01)
@@ -145,25 +148,33 @@ func update_animations(direction):
 		else:
 			anim.play("jump")
 
+func add_spell(spell_name: String):
+	if(Global_Constants.SPELLS.has(spell_name)):
+		spells[spell_name] = Global_Constants.SPELLS.get(spell_name);
+		switch_spell_by_name(spell_name);
+
 func switch_spell(idx: int):
 	# get starting spell
 	current_spell_idx = idx;
 	var spell_key = spells.keys()[idx];
-	var new_spell: Spell = spells[spell_key].instantiate();
+	switch_spell_by_name(spell_key);
+
+func switch_spell_by_name(spell_name: String):
+	var new_spell: Spell = spells[spell_name].instantiate();
 	new_spell.initialize(self);
+	
 	# clear spell to be safe
 	if(spell):
 		spell.queue_free();
+		
 	# equip the spell
 	hands.add_child(new_spell);
 	new_spell.ammo_changed.connect(update_ammo);
 	new_spell.recoil.connect(recoil);
-	if(spell and new_spell.max_ammo < spell.ammo):
-		new_spell.ammo = spell.max_ammo;
-	elif(spell):
-		new_spell.ammo = spell.ammo;
-	emit_signal("ammo_changed", new_spell.ammo);
+	if(spell):
+		new_spell.ammo = spell.ammo if spell.ammo <= new_spell.max_ammo else new_spell.max_ammo;
 	emit_signal("ammo_max_changed", new_spell.max_ammo);
+	emit_signal("ammo_changed", new_spell.ammo);
 	# save the reference
 	spell = new_spell;
 
@@ -178,7 +189,7 @@ func move_hands():
 	if(spell.ammo > 0):
 		if (Input.is_action_just_pressed("click")):
 			spell.load_spell();
-		if (spell.projectile and spell.charging and Input.is_action_just_released("click")):
+		if (is_instance_valid(spell.projectile) and !spell.projectile.is_dying and spell.charging and Input.is_action_just_released("click")):
 			spell.shoot_spell();
 
 func recoil(recoil_speed):
