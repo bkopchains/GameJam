@@ -1,11 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://dy4ok1pw44v47"]
+[gd_scene load_steps=11 format=3 uid="uid://dy4ok1pw44v47"]
 
 [ext_resource type="Script" path="res://scripts/spider.gd" id="1_57ec3"]
+[ext_resource type="Shader" path="res://assets/shaders/flash.gdshader" id="2_a350f"]
 [ext_resource type="Texture2D" uid="uid://blnk74py52j0u" path="res://assets/textures/spider.png" id="2_hskxm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_uyqpe"]
 radius = 6.0
 height = 26.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_au7rv"]
+resource_local_to_scene = true
+shader = ExtResource("2_a350f")
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash_modifier = 0.0
 
 [sub_resource type="Animation" id="Animation_5ndv6"]
 length = 0.001
@@ -78,6 +85,7 @@ rotation = -1.5708
 shape = SubResource("CapsuleShape2D_uyqpe")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_au7rv")
 texture = ExtResource("2_hskxm")
 hframes = 6
 vframes = 2

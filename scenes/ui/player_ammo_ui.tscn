@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://5q42ivhmhq5j"]
 
-[ext_resource type="Texture2D" uid="uid://dsgto0um6paqr" path="res://assets/textures/fireball_ammo_empty.png" id="1_fjdhq"]
+[ext_resource type="Texture2D" uid="uid://dsgto0um6paqr" path="res://assets/textures/ui/fireball_ammo_empty.png" id="1_fjdhq"]
 [ext_resource type="Script" path="res://scripts/ui/player_ammo_ui.gd" id="1_lhimb"]
-[ext_resource type="Texture2D" uid="uid://c2nljwmfa6gd2" path="res://assets/textures/fireball_ammo.png" id="2_nl0sh"]
+[ext_resource type="Texture2D" uid="uid://c2nljwmfa6gd2" path="res://assets/textures/ui/fireball_ammo.png" id="2_nl0sh"]
 
 [node name="PlayerAmmoUI" type="CanvasLayer"]
 script = ExtResource("1_lhimb")

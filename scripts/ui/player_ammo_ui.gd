@@ -6,7 +6,7 @@ var sprite_width = 6;
 var reload_time = 2.0;
 var ammo = 3;
 var max_ammo = 3;
-@export var Player : CharacterBody2D;
+@export var player : CharacterBody2D;
 @onready var ammo_ui_empty = $AmmoUI_Empty
 @onready var ammo_ui_full = $AmmoUI_Full
 @onready var ammo_reload_timer = $AmmoReload_Timer
@@ -15,12 +15,12 @@ var max_ammo = 3;
 
 
 func _ready():
-	if(Player != null):
-		ammo = Player.ammo;
-		max_ammo = Player.max_ammo
-		Player.ammo_changed.connect(change_texture);
-		Player.ammo_max_changed.connect(change_max);
-		Player.reload_started.connect(reload);
+	if(player != null):
+		ammo = player.spell.ammo;
+		max_ammo = player.spell.max_ammo
+		player.ammo_changed.connect(change_texture);
+		player.ammo_max_changed.connect(change_max);
+		player.reload_started.connect(reload);
 		ammo_ui_empty.size.x = max_ammo * sprite_width;
 		ammo_ui_full.size.x = ammo * sprite_width
 	progress_width = max_ammo * sprite_width
@@ -39,8 +39,11 @@ func change_texture(value):
 	if(ammo >= 0 and ammo <= max_ammo):
 		ammo_ui_full.size.x = ammo * sprite_width;
 
-func change_max():
-	ammo = Player.ammo;
-	max_ammo = Player.max_ammo
+func change_max(value):
+	max_ammo = value;
 	ammo_ui_empty.size.x = max_ammo * sprite_width;
-	ammo_ui_full.size.x = ammo * sprite_width
+	ammo_ui_full.size.x = ammo * sprite_width;
+	
+	progress_width = max_ammo * sprite_width
+	ammo_reload_back.size.x = progress_width;
+	ammo_reload_progress.size.x = round(progress) if ammo < max_ammo else 0;

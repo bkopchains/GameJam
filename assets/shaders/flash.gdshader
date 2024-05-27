@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
-uniform vec4 color : source_color;
-uniform float flashState : hint_range(0,1) = 0.5;
+uniform vec4 flash_color : source_color = vec4(1.0);
+uniform float flash_modifier : hint_range(0.0,1.0) = 0.0;
 
 void vertex() {
 	// Called for every vertex the material is visible on.
@@ -9,10 +9,10 @@ void vertex() {
 
 void fragment() {
 	// Called for every pixel the material is visible on.
-	vec4 icol = texture(TEXTURE, UV);
+	vec4 color = texture(TEXTURE, UV);
 		
-	COLOR = mix(icol, color, flashState);
-	COLOR.a *= icol.a;
+	color.rgb = mix(color.rgb, flash_color.rgb, flash_modifier);
+	COLOR = color;
 }
 
 //void light() {
