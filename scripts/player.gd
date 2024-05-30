@@ -49,7 +49,7 @@ func _ready():
 func _physics_process(delta):
 	var pos = position
 	if Input.is_action_just_pressed("ui_cancel"):
-		DialogueManager.show_example_dialogue_balloon(load("res://dialog/intro.dialogue"), "intro");
+		DialogueManager.show_dialogue_balloon(load("res://dialog/intro.dialogue"), "intro");
 		
 	# Add the gravity.
 	var direction = Input.get_axis("move_left", "move_right")
@@ -92,7 +92,6 @@ func _physics_process(delta):
 	
 	collision_info = move_and_collide(move * delta, false, 0.01)
 	if (Input.is_action_pressed("right_click")):
-		emit_signal("ammo_max_changed", spell.ammo+1);
 		is_bubbled = true;
 		bubble.visible = true;
 		if collision_info:
