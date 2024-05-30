@@ -55,6 +55,11 @@ variables={}
 portraits/default_portrait=""
 glossary/default_case_sensitive=true
 
+[dialogue_manager]
+
+general/custom_test_scene_path="res://dialog/custom_dialog.tscn"
+general/balloon_path="res://dialog/balloon/balloon.tscn"
+
 [display]
 
 window/size/viewport_width=320
