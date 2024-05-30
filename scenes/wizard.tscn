@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://curt8trrfun8"]
+[gd_scene load_steps=15 format=3 uid="uid://curt8trrfun8"]
 
 [ext_resource type="Texture2D" uid="uid://bpk0db1f68mix" path="res://assets/textures/wizard.png" id="1_hfpjg"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ycjm2"]
 [ext_resource type="Texture2D" uid="uid://b6383eo7ks6fm" path="res://assets/textures/wizard_hands.png" id="3_4mwyn"]
 [ext_resource type="Texture2D" uid="uid://b8kvo1dhh63dq" path="res://assets/textures/bubble.png" id="4_6t0sk"]
+[ext_resource type="FontFile" uid="uid://g8t1wvx24vbd" path="res://assets/fonts/PixelOperator8.ttf" id="5_4its1"]
 
 [sub_resource type="Curve" id="Curve_1dmvj"]
 _data = [Vector2(0.0337079, 1), 0.0, 0.0, 0, 0, Vector2(0.994382, 0), 0.0, 0.0, 0, 0]
@@ -168,5 +169,25 @@ texture = ExtResource("4_6t0sk")
 process_callback = 0
 wait_time = 2.0
 one_shot = true
+
+[node name="debug1" type="Label" parent="."]
+offset_left = -6.0
+offset_top = -11.0
+offset_right = 10.0
+offset_bottom = 17.0
+theme_override_fonts/font = ExtResource("5_4its1")
+theme_override_font_sizes/font_size = 2
+text = "test"
+clip_text = true
+
+[node name="debug2" type="Label" parent="."]
+offset_left = -6.0
+offset_top = -14.0
+offset_right = 10.0
+offset_bottom = 14.0
+theme_override_fonts/font = ExtResource("5_4its1")
+theme_override_font_sizes/font_size = 2
+text = "test"
+clip_text = true
 
 [connection signal="timeout" from="Fireball_Timer" to="." method="_on_fireball_timer_timeout"]
