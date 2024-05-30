@@ -43,10 +43,11 @@ func _ready():
 	is_alive = true
 	switch_spell(current_spell_idx);
 	
-	# dialog test
-	var layout = Dialogic.start("hello");
-	
 func _physics_process(delta):
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		DialogueManager.show_example_dialogue_balloon(load("res://dialog/intro.dialogue"), "intro");
+		
 	# Add the gravity.
 	var direction = Input.get_axis("move_left", "move_right")
 	if not on_floor:

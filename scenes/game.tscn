@@ -210,22 +210,22 @@ texture = ExtResource("1_adswq")
 0:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_2iiq3")
 0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 0:0/0/physics_layer_0/angular_velocity = 0.0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 7.6875, 8, 8, -8, 8)
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
 1:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_qtntd")
 1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 1:0/0/physics_layer_0/angular_velocity = 0.0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 7.6875, 8, 8, -8, 8)
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:0/0 = 0
 2:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_rqw06")
 2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 2:0/0/physics_layer_0/angular_velocity = 0.0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 7.6875, 8, 8, -8, 8)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:0/0 = 0
 3:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_rqw06")
 3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 3:0/0/physics_layer_0/angular_velocity = 0.0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 7.6875, 8, 8, -8, 8)
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:0/0 = 0
 4:0/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_rqw06")
 4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -262,7 +262,7 @@ texture = ExtResource("1_adswq")
 4:1/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_rqw06")
 4:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 4:1/0/physics_layer_0/angular_velocity = 0.0
-4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 7.6875, 8, 8, -8, 8)
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 5:1/0 = 0
 5:1/0/occlusion_layer_0/polygon = SubResource("OccluderPolygon2D_cnjct")
 5:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
@@ -807,11 +807,11 @@ position = Vector2(616, 176)
 [node name="Bats" type="Node" parent="Enemies"]
 
 [node name="bat" parent="Enemies/Bats" node_paths=PackedStringArray("player") instance=ExtResource("5_2mt64")]
-position = Vector2(752, -8)
+position = Vector2(760, 16)
 player = NodePath("../../../Wizard")
 
 [node name="bat5" parent="Enemies/Bats" node_paths=PackedStringArray("player") instance=ExtResource("5_2mt64")]
-position = Vector2(488, -215)
+position = Vector2(488, -160)
 player = NodePath("../../../Wizard")
 
 [node name="bat2" parent="Enemies/Bats" node_paths=PackedStringArray("player") instance=ExtResource("5_2mt64")]
@@ -830,6 +830,10 @@ player = NodePath("../../../Wizard")
 
 [node name="spider" parent="Enemies/Spiders" node_paths=PackedStringArray("player") instance=ExtResource("3_pruqs")]
 position = Vector2(356, 137)
+player = NodePath("../../../Wizard")
+
+[node name="spider3" parent="Enemies/Spiders" node_paths=PackedStringArray("player") instance=ExtResource("3_pruqs")]
+position = Vector2(112, -248)
 player = NodePath("../../../Wizard")
 
 [node name="spider2" parent="Enemies/Spiders" node_paths=PackedStringArray("player") instance=ExtResource("3_pruqs")]
@@ -863,7 +867,7 @@ position = Vector2(48, 384)
 shape = SubResource("WorldBoundaryShape2D_6do8m")
 
 [node name="Wizard" parent="." instance=ExtResource("2_ejnkn")]
-position = Vector2(160, 127)
+position = Vector2(69, 151)
 
 [node name="Camera2D" type="Camera2D" parent="Wizard"]
 position = Vector2(0, -31)
