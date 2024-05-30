@@ -8,6 +8,9 @@ extends CharacterBody2D
 @onready var hands: Sprite2D = $Hands
 @onready var fireball_timer = $Fireball_Timer
 
+@onready var debug1: Label = $debug1
+@onready var debug2: Label = $debug2
+
 const SPEED = 200.0
 const MAXSPEED = 200.0
 const JUMP_VELOCITY = -300.0
@@ -44,7 +47,7 @@ func _ready():
 	switch_spell(current_spell_idx);
 	
 func _physics_process(delta):
-	
+	var pos = position
 	if Input.is_action_just_pressed("ui_cancel"):
 		DialogueManager.show_example_dialogue_balloon(load("res://dialog/intro.dialogue"), "intro");
 		
@@ -130,6 +133,8 @@ func _physics_process(delta):
 		#gravity = 0
 	#if (Input.is_action_just_released("right_click")):
 		#gravity = starting_gravity
+	debug2.text = "dX: " + var_to_str((pos-position).x)
+	debug1.text = "dY: " + var_to_str((pos-position).y)
 
 func update_animations(direction):
 	if (direction > 0):
