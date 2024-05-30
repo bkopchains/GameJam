@@ -1,8 +1,24 @@
-[gd_scene load_steps=9 format=3 uid="uid://bu4ura6xgn5f8"]
+[gd_scene load_steps=13 format=3 uid="uid://bu4ura6xgn5f8"]
 
 [ext_resource type="Script" path="res://scripts/spells/spellbooks/fireball+.gd" id="1_6irf2"]
 [ext_resource type="Texture2D" uid="uid://n13d2w5fmikv" path="res://assets/textures/book.png" id="1_f1n5f"]
 [ext_resource type="Texture2D" uid="uid://btm3d0dtrrn7s" path="res://assets/textures/fx/light_x.png" id="3_adali"]
+
+[sub_resource type="Curve" id="Curve_ditp5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.89155, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ehwj0"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.580392)
+
+[sub_resource type="Gradient" id="Gradient_au6xn"]
+offsets = PackedFloat32Array(0, 0.745342, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0.0248447, 0.0248447, 0.0248447, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6qgmk"]
+gradient = SubResource("Gradient_au6xn")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yx5os"]
 radius = 6.32127
@@ -341,6 +357,29 @@ script = ExtResource("1_6irf2")
 [node name="Book" type="Sprite2D" parent="."]
 texture = ExtResource("1_f1n5f")
 hframes = 3
+
+[node name="Embers" type="CPUParticles2D" parent="Book"]
+z_index = -1
+amount = 12
+lifetime = 2.0
+randomness = 1.0
+emission_shape = 3
+emission_rect_extents = Vector2(4, 2)
+direction = Vector2(0, -1)
+spread = 90.0
+gravity = Vector2(0, -10)
+initial_velocity_max = 5.0
+scale_amount_min = 0.5
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_ditp5")
+color = Color(1, 0.286275, 0.270588, 1)
+color_ramp = SubResource("Gradient_ehwj0")
+hue_variation_min = -0.35
+hue_variation_max = 0.54
+
+[node name="glow" type="PointLight2D" parent="Book"]
+color = Color(1, 0.313726, 0.313726, 1)
+texture = SubResource("GradientTexture2D_6qgmk")
 
 [node name="Book_Cover" type="Sprite2D" parent="Book"]
 texture = ExtResource("1_f1n5f")
