@@ -117,11 +117,11 @@ func _physics_process(delta):
 		else:
 			on_wall = false;
 			on_floor = false;
-		
-	if(Input.is_action_just_pressed("next_spell")):
-		switch_spell((current_spell_idx+1) % spells.size());
-	if(Input.is_action_just_pressed("prev_spell")):
-		switch_spell((current_spell_idx-1) % spells.size());
+	if(spells.size() > 0):
+		if(Input.is_action_just_pressed("next_spell")):
+			switch_spell((current_spell_idx+1) % spells.size());
+		if(Input.is_action_just_pressed("prev_spell")):
+			switch_spell((current_spell_idx-1) % spells.size());
 	
 	update_animations(direction);
 	move_hands();
