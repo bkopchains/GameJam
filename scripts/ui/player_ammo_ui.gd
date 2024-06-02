@@ -16,8 +16,12 @@ var max_ammo = 3;
 
 func _ready():
 	if(player != null):
-		ammo = player.spell.ammo;
-		max_ammo = player.spell.max_ammo
+		if(player.spell):
+			ammo = player.spell.ammo;
+			max_ammo = player.spell.max_ammo
+		else:
+			ammo = 0;
+			max_ammo = 0;
 		player.ammo_changed.connect(change_texture);
 		player.ammo_max_changed.connect(change_max);
 		player.reload_started.connect(reload);
