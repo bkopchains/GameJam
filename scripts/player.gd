@@ -62,6 +62,8 @@ func _physics_process(delta):
 		):
 			var mvmt = direction * ACCELERATION * delta;
 			move.x += mvmt;
+		#elif(direction == 0):
+			#move.x = move_toward(velocity.x, 0, 0.01);
 		
 		if(on_wall):
 			# wall jump
@@ -70,8 +72,8 @@ func _physics_process(delta):
 				move.y = JUMP_VELOCITY;
 				move.x = collision_info.get_normal().x * SPEED;
 			# prevent zooming down when moving after wall slide
-			elif (direction == 0):
-				move.y = gravity * delta;
+			elif(move.y >= 0):
+				move.y = gravity * delta * 5;
 	else:
 		move.y = 1;
 		# Handle jump.
@@ -89,8 +91,9 @@ func _physics_process(delta):
 	
 	if (spell and spell.charging and is_instance_valid(spell.projectile)):
 		spell.charge_spell(delta);
-	
-	collision_info = move_and_collide(move * delta, false, 0.01)
+	velocity = move;
+	move_and_slide()
+	collision_info = get_last_slide_collision()
 	if (Input.is_action_pressed("right_click")):
 		is_bubbled = true;
 		bubble.visible = true;
@@ -123,7 +126,7 @@ func _physics_process(delta):
 	update_animations(direction);
 	move_hands();
 	
-	if(spell.ammo < spell.max_ammo and fireball_timer.time_left == 0):
+	if(spell and spell.ammo < spell.max_ammo and fireball_timer.time_left == 0):
 		var timer_length = 1.5 # + (float(ammo)/float(max_ammo))
 		reload_started.emit(timer_length);
 		fireball_timer.start(timer_length);
@@ -132,8 +135,6 @@ func _physics_process(delta):
 		#gravity = 0
 	#if (Input.is_action_just_released("right_click")):
 		#gravity = starting_gravity
-	debug2.text = "dX: " + var_to_str((pos-position).x)
-	debug1.text = "dY: " + var_to_str((pos-position).y)
 
 func update_animations(direction):
 	if (direction > 0):
@@ -159,43 +160,54 @@ func add_spell(spell_name: String):
 		switch_spell_by_name(spell_name);
 
 func switch_spell(idx: int):
-	# get starting spell
-	current_spell_idx = idx;
-	var spell_key = spells.keys()[idx];
-	switch_spell_by_name(spell_key);
+	if(!spells.is_empty()):
+		# get starting spell
+		current_spell_idx = idx;
+		var spell_key = spells.keys()[idx];
+		switch_spell_by_name(spell_key);
 
 func switch_spell_by_name(spell_name: String):
-	var new_spell: Spell = spells[spell_name].instantiate();
-	new_spell.initialize(self);
-	
-	# clear spell to be safe
-	if(spell):
-		spell.queue_free();
+	if(!spells.is_empty()):
+		var new_spell: Spell = spells[spell_name].instantiate();
+		new_spell.initialize(self);
 		
-	# equip the spell
-	hands.add_child(new_spell);
-	new_spell.ammo_changed.connect(update_ammo);
-	new_spell.recoil.connect(recoil);
-	if(spell):
-		new_spell.ammo = spell.ammo if spell.ammo <= new_spell.max_ammo else new_spell.max_ammo;
-	emit_signal("ammo_max_changed", new_spell.max_ammo);
-	emit_signal("ammo_changed", new_spell.ammo);
-	# save the reference
-	spell = new_spell;
+		# clear spell to be safe
+		if(spell):
+			spell.queue_free();
+			
+		# equip the spell
+		hands.add_child(new_spell);
+		new_spell.ammo_changed.connect(update_ammo);
+		new_spell.recoil.connect(recoil);
+		if(spell):
+			new_spell.ammo = spell.ammo if spell.ammo <= new_spell.max_ammo else new_spell.max_ammo;
+		emit_signal("ammo_max_changed", new_spell.max_ammo);
+		emit_signal("ammo_changed", new_spell.ammo);
+		# save the reference
+		spell = new_spell;
 
 func move_hands():
-	var mPos = get_global_mouse_position();
-	aim_direction = (mPos - position).normalized();
+	if(Global_Constants.mouse_aiming):
+		var mPos = get_global_mouse_position();
+		var mouse_direction = (mPos - position).normalized();
+		aim_direction = mouse_direction;
+	else:
+		var move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		aim_direction = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+		aim_direction = move_direction if aim_direction.is_zero_approx() else aim_direction;
 	if (aim_direction.x > 0):
 		hands.flip_v = 0;
 	elif (aim_direction.x < 0):
 		hands.flip_v = 1;
-	hands.look_at(mPos);
-	if(spell.ammo > 0):
-		if (Input.is_action_just_pressed("click")):
-			spell.load_spell();
-		if (is_instance_valid(spell.projectile) and !spell.projectile.is_dying and spell.charging and Input.is_action_just_released("click")):
-			spell.shoot_spell();
+	hands.look_at(aim_direction*10 + position);
+	if(spell):
+		spell.direction = aim_direction;
+		if(spell.ammo > 0):
+			if (Input.is_action_just_pressed("click") and Input.get_action_raw_strength("click") > 0):
+				spell.load_spell();
+			if (is_instance_valid(spell.projectile) and !spell.projectile.is_dying and spell.charging and Input.get_action_raw_strength("click") == 0):
+				spell.shoot_spell();
+			print(aim_direction);
 
 func recoil(recoil_speed):
 	on_floor = false;

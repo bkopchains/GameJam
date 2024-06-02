@@ -12,10 +12,10 @@ var charging = false;
 signal ammo_changed(value);
 signal recoil(recoil_speed);
 	
-func _physics_process(delta):
-	if(player):
-		var mPos = get_global_mouse_position();
-		direction = (mPos - player.position).normalized();
+#func _physics_process(delta):
+	#if(player):
+		#var mPos = get_global_mouse_position();
+		#direction = (mPos - player.position).normalized();
 	
 # do we need this?
 func initialize(_player: CharacterBody2D):

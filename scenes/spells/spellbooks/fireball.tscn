@@ -350,7 +350,7 @@ _data = {
 "float": SubResource("Animation_lok12")
 }
 
-[node name="Spellbook_Fireball+" type="Area2D"]
+[node name="Spellbook_Fireball" type="Area2D"]
 position = Vector2(0, -4.99847)
 script = ExtResource("1_6irf2")
 
