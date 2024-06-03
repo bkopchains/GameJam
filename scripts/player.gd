@@ -11,8 +11,8 @@ extends CharacterBody2D
 @onready var debug1: Label = $debug1
 @onready var debug2: Label = $debug2
 
-const SPEED = 200.0
-const MAXSPEED = 200.0
+const SPEED = 175.0
+const MAXSPEED = 175.0
 const JUMP_VELOCITY = -300.0
 const MAX_FALL_SPEED = 400
 
@@ -207,7 +207,7 @@ func move_hands():
 				spell.load_spell();
 			if (is_instance_valid(spell.projectile) and !spell.projectile.is_dying and spell.charging and Input.get_action_raw_strength("click") == 0):
 				spell.shoot_spell();
-			print(aim_direction);
+			#print(aim_direction);
 
 func recoil(recoil_speed):
 	on_floor = false;

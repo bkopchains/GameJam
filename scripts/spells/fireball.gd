@@ -9,6 +9,7 @@ var min_fireball_scaler = 1
 var max_fireball_scaler = 1.5
 var starting_fireball_speed = 200.0
 var starting_fireball_scale = null
+var starting_projectile_damage=2
 
 func _ready():
 	scene = preload("res://scenes/spells/projectiles/fireball.tscn")
@@ -19,7 +20,7 @@ func _ready():
 func load_spell():
 	projectile = scene.instantiate()
 	projectile.type = "fireball";
-	projectile.damage = 1;
+	projectile.damage = starting_projectile_damage;
 	add_child(projectile)
 	projectile.position.x = 9
 	starting_fireball_speed = projectile.FIREBALL_SPEED
@@ -41,7 +42,7 @@ func charge_spell(delta):
 	projectile.scale = fireball_scaler * starting_fireball_scale
 	recoil_speed = fireball_scaler * starting_recoil_speed
 	projectile.FIREBALL_SPEED = fireball_scaler * starting_fireball_speed
-
+	projectile.damage=fireball_scaler*starting_projectile_damage
 func shoot_spell():
 	var fireball_pos = projectile.global_position
 	var fireball_rot = projectile.global_rotation
