@@ -1,5 +1,6 @@
 [gd_scene load_steps=55 format=3 uid="uid://catv2wvjucsjt"]
 
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_8hkpy"]
 [ext_resource type="Texture2D" uid="uid://o1gy47e2duqu" path="res://assets/textures/slugmap.png" id="1_adswq"]
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
 [ext_resource type="PackedScene" uid="uid://f38rnki5a1rj" path="res://scenes/killzone.tscn" id="2_qi7gs"]
@@ -10,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://6wb8kgiafxym" path="res://assets/textures/bkg/shootingStar.png" id="5_k806p"]
 [ext_resource type="Texture2D" uid="uid://d3p7dbkja45yq" path="res://assets/textures/bkg/sky.png" id="7_f3m2w"]
 [ext_resource type="Texture2D" uid="uid://b8ry0qb2gfyxd" path="res://assets/textures/bkg/stars.png" id="8_mu20u"]
-[ext_resource type="Resource" uid="uid://crpxhpc21d8ci" path="res://dialog/signs.dialogue" id="9_q6n4w"]
 [ext_resource type="Texture2D" uid="uid://n7cwjuni01sg" path="res://assets/textures/bkg/moon.png" id="9_ucrr8"]
 [ext_resource type="Texture2D" uid="uid://dr7tnee4klf07" path="res://assets/textures/bkg/mountains.png" id="10_l452d"]
 [ext_resource type="PackedScene" uid="uid://5q42ivhmhq5j" path="res://scenes/ui/player_ammo_ui.tscn" id="11_npb7l"]
@@ -885,6 +885,7 @@ sources/1 = SubResource("TileSetAtlasSource_3w2cl")
 size = Vector2(14, 6)
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_8hkpy")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 process_physics_priority = 1
@@ -964,14 +965,6 @@ scale_amount_min = 0.05
 scale_amount_max = 0.25
 scale_amount_curve = SubResource("Curve_j3570")
 color = Color(1, 0.921569, 0.831373, 1)
-
-[node name="Signs" type="Node" parent="."]
-
-[node name="Tutorial_Sign1" parent="Signs" instance=ExtResource("18_4n1bd")]
-z_index = -2
-position = Vector2(-672, 200)
-dialog_resource = ExtResource("9_q6n4w")
-dialog_start = "tutorial_1"
 
 [node name="Pickups" type="Node" parent="."]
 
@@ -1103,3 +1096,9 @@ color = Color(0.499435, 0.596013, 0.704586, 1)
 
 [node name="PlayerAmmoUI" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("11_npb7l")]
 player = NodePath("../../Wizard")
+
+[node name="Signs" type="Node" parent="."]
+
+[node name="Tutorial_Sign1" parent="Signs" instance=ExtResource("18_4n1bd")]
+position = Vector2(-330, 168)
+dialog_start = "start"

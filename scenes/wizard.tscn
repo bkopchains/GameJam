@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://curt8trrfun8"]
+[gd_scene load_steps=16 format=3 uid="uid://curt8trrfun8"]
 
 [ext_resource type="Texture2D" uid="uid://bpk0db1f68mix" path="res://assets/textures/wizard.png" id="1_hfpjg"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_ycjm2"]
@@ -11,7 +11,7 @@ _data = [Vector2(0.0337079, 1), 0.0, 0.0, 0, 0, Vector2(0.994382, 0), 0.0, 0.0, 
 point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_murr6"]
-size = Vector2(12, 14.5313)
+size = Vector2(12, 14.7806)
 
 [sub_resource type="Animation" id="Animation_r6lwv"]
 length = 0.001
@@ -122,6 +122,9 @@ _data = {
 "wall_slide": SubResource("Animation_f2abe")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_0i6e5"]
+radius = 8.0
+
 [node name="Wizard" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 3
@@ -141,7 +144,7 @@ scale_amount_curve = SubResource("Curve_1dmvj")
 color = Color(0.537255, 0.647059, 0.431373, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0.265625)
+position = Vector2(0, 0.390292)
 shape = SubResource("RectangleShape2D_murr6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -189,5 +192,15 @@ offset_bottom = 9.0
 theme_override_fonts/font = ExtResource("5_4its1")
 theme_override_font_sizes/font_size = 5
 text = "test"
+
+[node name="Direction" type="Marker2D" parent="."]
+
+[node name="ActionableFinder" type="Area2D" parent="Direction"]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Direction/ActionableFinder"]
+position = Vector2(8, 0)
+shape = SubResource("CircleShape2D_0i6e5")
 
 [connection signal="timeout" from="Fireball_Timer" to="." method="_on_fireball_timer_timeout"]

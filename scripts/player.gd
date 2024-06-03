@@ -8,11 +8,14 @@ extends CharacterBody2D
 @onready var hands: Sprite2D = $Hands
 @onready var fireball_timer = $Fireball_Timer
 
+@onready var direction_collider = $Direction
+@onready var actionable_finder = $Direction/ActionableFinder
+
 @onready var debug1: Label = $debug1
 @onready var debug2: Label = $debug2
 
-const SPEED = 200.0
-const MAXSPEED = 200.0
+const SPEED = 150.0
+const MAXSPEED = 150.0
 const JUMP_VELOCITY = -300.0
 const MAX_FALL_SPEED = 400
 
@@ -29,6 +32,7 @@ var fall_boost = 20
 var on_floor = false;
 var on_wall = false;
 var collision_info: KinematicCollision2D = null;
+var move_direction = 0;
 
 #spell vars
 var current_spell_idx: int = 0;
@@ -45,25 +49,29 @@ func _ready():
 	spells = Global_Constants.STARTING_SPELLS.duplicate(true);
 	is_alive = true
 	switch_spell(current_spell_idx);
+
+
+func _unhandled_input(event: InputEvent):
+	if Input.is_action_just_pressed("interact"):
+		var actionables = actionable_finder.get_overlapping_areas();
+		if actionables.size() > 0:
+			actionables[0].action();
+			return;
+			
 	
+	move_direction = Input.get_axis("move_left", "move_right")
+
 func _physics_process(delta):
-	var pos = position
-	if Input.is_action_just_pressed("ui_cancel"):
-		DialogueManager.show_dialogue_balloon(load("res://dialog/intro.dialogue"), "intro");
-		
+	
 	# Add the gravity.
-	var direction = Input.get_axis("move_left", "move_right")
 	if not on_floor:
 		if (move.y <= MAX_FALL_SPEED or is_bubbled):
 			move.y += gravity * delta
-		if direction != 0 and (
-			not ((direction > 0 and move.x >= MAXSPEED) or (direction < 0 and move.x <= (MAXSPEED * -1))) 
+		if move_direction != 0 and (
+			not ((move_direction > 0 and move.x >= MAXSPEED) or (move_direction < 0 and move.x <= (MAXSPEED * -1))) 
 			or is_bubbled
 		):
-			var mvmt = direction * ACCELERATION * delta;
-			move.x += mvmt;
-		#elif(direction == 0):
-			#move.x = move_toward(velocity.x, 0, 0.01);
+			move.x += move_direction * ACCELERATION * delta;
 		
 		if(on_wall):
 			# wall jump
@@ -83,14 +91,15 @@ func _physics_process(delta):
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.
-		if direction:
-			move.x = direction * SPEED
+		if move_direction:
+			move.x = move_direction * SPEED
 		else:
 			move.x = move_toward(velocity.x, 0, SPEED)
 
 	
 	if (spell and spell.charging and is_instance_valid(spell.projectile)):
 		spell.charge_spell(delta);
+		
 	velocity = move;
 	move_and_slide()
 	collision_info = get_last_slide_collision()
@@ -123,7 +132,7 @@ func _physics_process(delta):
 		if(Input.is_action_just_pressed("prev_spell")):
 			switch_spell((current_spell_idx-1) % spells.size());
 	
-	update_animations(direction);
+	update_animations(move_direction);
 	move_hands();
 	
 	if(spell and spell.ammo < spell.max_ammo and fireball_timer.time_left == 0):
@@ -135,11 +144,13 @@ func _physics_process(delta):
 		#gravity = 0
 	#if (Input.is_action_just_released("right_click")):
 		#gravity = starting_gravity
-
+		
 func update_animations(direction):
 	if (direction > 0):
+			direction_collider.rotation = 0;
 			sprite.flip_h = 0;
 	elif (direction < 0):
+			direction_collider.rotation = deg_to_rad(180);
 			sprite.flip_h = 1;
 	if (on_floor):
 		if (direction):
@@ -192,8 +203,8 @@ func move_hands():
 		var mouse_direction = (mPos - position).normalized();
 		aim_direction = mouse_direction;
 	else:
-		var move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-		aim_direction = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+		var move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
+		aim_direction = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down").normalized()
 		aim_direction = move_direction if aim_direction.is_zero_approx() else aim_direction;
 	if (aim_direction.x > 0):
 		hands.flip_v = 0;
@@ -203,11 +214,10 @@ func move_hands():
 	if(spell):
 		spell.direction = aim_direction;
 		if(spell.ammo > 0):
-			if (Input.is_action_just_pressed("click") and Input.get_action_raw_strength("click") > 0):
+			if (Input.is_action_just_pressed("click") and Input.get_action_raw_strength("click") > 0 and !spell.charging):
 				spell.load_spell();
 			if (is_instance_valid(spell.projectile) and !spell.projectile.is_dying and spell.charging and Input.get_action_raw_strength("click") == 0):
 				spell.shoot_spell();
-			print(aim_direction);
 
 func recoil(recoil_speed):
 	on_floor = false;

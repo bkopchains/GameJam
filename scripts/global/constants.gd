@@ -14,4 +14,4 @@ const STARTING_SPELLS: Dictionary = {}
 const SPELL_GRAVITY_ENABLED = true;
 
 ## if true, uses mouse aiming
-var mouse_aiming = true;
+var mouse_aiming = false;
