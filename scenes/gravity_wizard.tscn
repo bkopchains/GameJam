@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3 uid="uid://ddb8i66ab0rto"]
+
+[ext_resource type="Script" path="res://scripts/Gravity Wizard.gd" id="1_jqxx2"]
+[ext_resource type="Texture2D" uid="uid://bsm1m80k2lj5" path="res://assets/textures/Grav-Wiz.png" id="2_4lo4r"]
+
+[sub_resource type="Animation" id="Animation_v3loo"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p8i2s"]
+resource_name = "idle"
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.298737, 0.568741, 0.82578),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_3p7vx"]
+resource_name = "start cast"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 6, 7, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6286e"]
+_data = {
+"RESET": SubResource("Animation_v3loo"),
+"idle": SubResource("Animation_p8i2s"),
+"start cast": SubResource("Animation_3p7vx")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5syjy"]
+radius = 2.23607
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pmloc"]
+radius = 15.0
+
+[sub_resource type="Gradient" id="Gradient_otohi"]
+offsets = PackedFloat32Array(0, 0.714286)
+colors = PackedColorArray(0.463286, 0.0866059, 0.724343, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sn1h7"]
+gradient = SubResource("Gradient_otohi")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Gravity Wizard" type="Area2D"]
+script = ExtResource("1_jqxx2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("2_4lo4r")
+hframes = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_6286e")
+}
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 4)
+shape = SubResource("CircleShape2D_5syjy")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_pmloc")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 2.0
+shadow_enabled = true
+shadow_filter_smooth = 11.0
+texture = SubResource("GradientTexture2D_sn1h7")
+texture_scale = 5.0
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(0, -2.38419e-07)
+scale = Vector2(1.5, 1.6)

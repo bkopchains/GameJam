@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://catv2wvjucsjt"]
+[gd_scene load_steps=52 format=3 uid="uid://catv2wvjucsjt"]
 
 [ext_resource type="Texture2D" uid="uid://o1gy47e2duqu" path="res://assets/textures/slugmap.png" id="1_adswq"]
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://5q42ivhmhq5j" path="res://scenes/ui/player_ammo_ui.tscn" id="11_npb7l"]
 [ext_resource type="PackedScene" uid="uid://bjk5m5sr3gky" path="res://scenes/ui/camera.tscn" id="13_agfqi"]
 [ext_resource type="PackedScene" uid="uid://bu4ura6xgn5f8" path="res://scenes/spells/spellbooks/fireball.tscn" id="14_v4kad"]
+[ext_resource type="PackedScene" uid="uid://ddb8i66ab0rto" path="res://scenes/gravity_wizard.tscn" id="16_2cnk1"]
 
 [sub_resource type="Animation" id="Animation_25n41"]
 length = 0.001
@@ -1044,3 +1045,7 @@ position = Vector2(-24, 152)
 
 [node name="Torch5" parent="." instance=ExtResource("4_duoy0")]
 position = Vector2(1160, 96)
+
+[node name="Gravity Wizard" parent="." node_paths=PackedStringArray("player") instance=ExtResource("16_2cnk1")]
+position = Vector2(-560, 48)
+player = NodePath("../Wizard")
