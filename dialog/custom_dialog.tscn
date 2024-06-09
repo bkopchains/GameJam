@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbs1802cu42et"]
+
+[ext_resource type="Script" path="res://dialog/custom_dialog.gd" id="1_w881n"]
+
+[node name="CustomDialog" type="Node2D"]
+script = ExtResource("1_w881n")

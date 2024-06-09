@@ -1,0 +1,86 @@
+[gd_scene load_steps=10 format=3 uid="uid://5jgnx0kd5cw2"]
+
+[ext_resource type="Script" path="res://scripts/bat.gd" id="1_cmqfy"]
+[ext_resource type="Shader" path="res://assets/shaders/flash.gdshader" id="2_4eiyd"]
+[ext_resource type="Texture2D" uid="uid://bbf5lcs13ffu1" path="res://assets/textures/bat.png" id="2_ojsej"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fboqd"]
+radius = 11.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kbfkn"]
+resource_local_to_scene = true
+shader = ExtResource("2_4eiyd")
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/flash_modifier = 0.0
+
+[sub_resource type="Animation" id="Animation_5ndv6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_jpoqj"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0um2j"]
+_data = {
+"RESET": SubResource("Animation_5ndv6"),
+"idle": SubResource("Animation_jpoqj")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tqjgw"]
+radius = 13.0384
+
+[node name="bat" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_cmqfy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_fboqd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kbfkn")
+texture = ExtResource("2_ojsej")
+hframes = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_0um2j")
+}
+autoplay = "idle"
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -1)
+shape = SubResource("CircleShape2D_tqjgw")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

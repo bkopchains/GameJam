@@ -1,0 +1,38 @@
+[gd_scene load_steps=4 format=3 uid="uid://c51gnrkyp5x2d"]
+
+[ext_resource type="Script" path="res://scripts/fx/enemy_death.gd" id="1_lrmxh"]
+
+[sub_resource type="Curve" id="Curve_gj5bi"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_q3l25"]
+offsets = PackedFloat32Array(0, 0.538462)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
+
+[node name="EnemyDeath" type="CPUParticles2D"]
+emitting = false
+amount = 100
+lifetime = 3.0
+one_shot = true
+explosiveness = 1.0
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector2(0, -1)
+spread = 120.0
+gravity = Vector2(0, 10)
+initial_velocity_max = 150.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+damping_min = 500.0
+damping_max = 500.0
+scale_amount_min = 0.25
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_gj5bi")
+color = Color(0.6, 0, 0, 1)
+color_ramp = SubResource("Gradient_q3l25")
+script = ExtResource("1_lrmxh")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

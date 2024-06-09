@@ -1,0 +1,118 @@
+[gd_scene load_steps=9 format=3 uid="uid://bl8ubgtjud7l3"]
+
+[ext_resource type="Texture2D" uid="uid://c3jtogwb6q4kj" path="res://assets/textures/sign.png" id="1_xtpj4"]
+[ext_resource type="Script" path="res://scenes/sign.gd" id="2_l5q3w"]
+[ext_resource type="PackedScene" uid="uid://b5n7110ifkcf8" path="res://scenes/actionable.tscn" id="3_0xqki"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iyata"]
+size = Vector2(20, 18)
+
+[sub_resource type="Animation" id="Animation_o4mch"]
+resource_name = "idle"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-1, 0), Vector2(0, 0), Vector2(2, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_3aeej"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_687iu"]
+resource_name = "actioned"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0379691, 0.0767126, 0.121362, 0.194882, 0.29085, 0.426096, 0.602088, 0.766652, 0.973697, 1.33041, 1.82306),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1, 0, 1, 2, 1, 0, 1, 2, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0379691, 0.0767126, 0.121362, 0.194882, 0.29085, 0.426096, 0.602088, 0.766652, 0.973697, 1.33041, 1.82306),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-1, 0), Vector2(0, 0), Vector2(2, 0), Vector2(0, 0), Vector2(-1, 0), Vector2(0, 0), Vector2(2, 0), Vector2(0, 0), Vector2(-1, 0), Vector2(0, 0), Vector2(2, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yhdua"]
+_data = {
+"RESET": SubResource("Animation_3aeej"),
+"actioned": SubResource("Animation_687iu"),
+"idle": SubResource("Animation_o4mch")
+}
+
+[node name="Sign" type="Sprite2D"]
+z_index = -5
+texture = ExtResource("1_xtpj4")
+hframes = 3
+script = ExtResource("2_l5q3w")
+
+[node name="Actionable" parent="." instance=ExtResource("3_0xqki")]
+dialog_start = "tutorial_1"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_iyata")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yhdua")
+}
+autoplay = "idle"
