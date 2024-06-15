@@ -47,12 +47,12 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_518g5"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.580392)
 
-[sub_resource type="Gradient" id="Gradient_otohi"]
+[sub_resource type="Gradient" id="Gradient_ahhii"]
 offsets = PackedFloat32Array(0, 0.714286)
-colors = PackedColorArray(0.430211, 0.31687, 0.236935, 1, 0, 0, 0, 1)
+colors = PackedColorArray(0.446622, 0.267636, 0.455725, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_q7l7x"]
-gradient = SubResource("Gradient_otohi")
+gradient = SubResource("Gradient_ahhii")
 width = 32
 height = 32
 fill = 1
@@ -86,7 +86,7 @@ initial_velocity_max = 5.0
 scale_amount_min = 0.5
 scale_amount_max = 2.0
 scale_amount_curve = SubResource("Curve_dy43w")
-color = Color(1, 0.55, 0, 1)
+color = Color(0.948055, 0.470137, 0.917795, 1)
 color_ramp = SubResource("Gradient_518g5")
 hue_variation_min = -0.35
 hue_variation_max = 0.54
