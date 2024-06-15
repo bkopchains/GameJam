@@ -972,6 +972,12 @@ position = Vector2(-672, 200)
 dialog_resource = ExtResource("9_q6n4w")
 dialog_start = "tutorial_1"
 
+[node name="Tutorial_Sign2" parent="Signs" instance=ExtResource("18_4n1bd")]
+z_index = -2
+position = Vector2(-536, 136)
+dialog_resource = ExtResource("9_q6n4w")
+dialog_start = "tutorial_2"
+
 [node name="Pickups" type="Node" parent="."]
 
 [node name="Spellbook_Fireball" parent="Pickups" node_paths=PackedStringArray("player") instance=ExtResource("14_v4kad")]

@@ -4,3 +4,11 @@ Sign: this is a sign.
 Wizard: ...ok?
 
 => END
+
+~ tutorial_2
+
+Sign: this is another sign.
+Wizard: ...really?
+Sign: what did you expect, a tutorial?
+
+=> END
