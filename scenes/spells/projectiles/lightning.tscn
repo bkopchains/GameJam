@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://dykofls6kf2yt"]
+
+[ext_resource type="Script" path="res://scripts/spells/projectiles/lightning.gd" id="1_24otw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_68gix"]
+radius = 2.0
+
+[sub_resource type="Curve" id="Curve_xpno2"]
+_data = [Vector2(0, 0.597283), 0.0, 2.00642, 0, 0, Vector2(0.22905, 0.710326), 2.30617, -1.46092, 0, 0, Vector2(0.572626, 0.244022), -1.3249, 2.13188, 0, 0, Vector2(0.768156, 0.66087), 2.04427, -2.01315, 0, 0, Vector2(0.905028, 0.392391), -1.99429, 2.74615, 0, 0, Vector2(0.98324, 0.145109), 2.82692, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="Curve" id="Curve_3ccxu"]
+_data = [Vector2(0, 0.985294), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Lightning" type="Area2D"]
+collision_layer = 8
+collision_mask = 5
+script = ExtResource("1_24otw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+texture_filter = 1
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_68gix")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+visible = false
+scale = Vector2(7.9, 7.9)
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+wait_time = 2.0
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 15, 0)
+width = 2.0
+width_curve = SubResource("Curve_xpno2")
+default_color = Color(1, 1, 0.486275, 1)
+
+[node name="Line2D2" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 15, 0)
+width = 1.0
+width_curve = SubResource("Curve_xpno2")
+default_color = Color(0.953794, 0.938469, 0.787437, 1)
+
+[node name="Line2D3" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 15, 0)
+width = 1.0
+width_curve = SubResource("Curve_xpno2")
+default_color = Color(0.86, 0.85441, 0.5246, 1)
+
+[node name="Sparks" type="CPUParticles2D" parent="."]
+amount = 16
+lifetime = 0.25
+emission_shape = 3
+emission_rect_extents = Vector2(1, 1)
+spread = 90.0
+gravity = Vector2(0, 100)
+initial_velocity_max = 114.75
+angular_velocity_min = -306.89
+angular_velocity_max = 660.98
+scale_amount_min = 0.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_3ccxu")
+color = Color(1, 1, 0.53, 1)
+hue_variation_min = -0.26
+hue_variation_max = 0.12
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
