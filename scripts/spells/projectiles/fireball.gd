@@ -1,6 +1,5 @@
 extends Projectile
 @export var FIREBALL_SPEED = 220
-@export var direction: Vector2 = Vector2()
 @onready var animation_player = $Sprite2D/AnimationPlayer
 @onready var sprite_2d = $Sprite2D
 @onready var collision_shape_2d = $CollisionShape2D

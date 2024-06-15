@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://catv2wvjucsjt"]
+[gd_scene load_steps=57 format=3 uid="uid://catv2wvjucsjt"]
 
 [ext_resource type="Texture2D" uid="uid://o1gy47e2duqu" path="res://assets/textures/slugmap.png" id="1_adswq"]
 [ext_resource type="PackedScene" uid="uid://curt8trrfun8" path="res://scenes/wizard.tscn" id="2_ejnkn"]
@@ -18,6 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://bjk5m5sr3gky" path="res://scenes/ui/camera.tscn" id="13_agfqi"]
 [ext_resource type="PackedScene" uid="uid://bu4ura6xgn5f8" path="res://scenes/spells/spellbooks/fireball.tscn" id="14_v4kad"]
 [ext_resource type="PackedScene" uid="uid://bl8ubgtjud7l3" path="res://scenes/sign.tscn" id="18_4n1bd"]
+[ext_resource type="FontFile" uid="uid://g8t1wvx24vbd" path="res://assets/fonts/PixelOperator8.ttf" id="19_1cfgk"]
+[ext_resource type="Script" path="res://scenes/cursorLabel.gd" id="20_6n2xo"]
 
 [sub_resource type="Animation" id="Animation_25n41"]
 length = 0.001
@@ -1108,3 +1110,11 @@ color = Color(0.499435, 0.596013, 0.704586, 1)
 
 [node name="PlayerAmmoUI" parent="UI" node_paths=PackedStringArray("player") instance=ExtResource("11_npb7l")]
 player = NodePath("../../Wizard")
+
+[node name="CursorLabel" type="Label" parent="."]
+offset_right = 64.0
+offset_bottom = 28.0
+theme_override_fonts/font = ExtResource("19_1cfgk")
+theme_override_font_sizes/font_size = 10
+text = "text"
+script = ExtResource("20_6n2xo")

@@ -13,6 +13,8 @@ extends CanvasLayer
 
 @onready var portrait: TextureRect = %Portrait
 
+@onready var talk_sound = $TalkSound
+
 ## The dialogue resource
 var resource: DialogueResource
 
@@ -158,4 +160,12 @@ func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
 	next(response.next_id)
 
 
+
 #endregion
+
+const LETTERS = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+func _on_dialogue_label_spoke(letter: String, letter_index: int, speed: float) -> void:
+	if(letter in LETTERS):
+		talk_sound.stream = load('res://assets/audio/letters/'+letter+'.wav');
+		talk_sound.play();
+	pass # Replace with function body.

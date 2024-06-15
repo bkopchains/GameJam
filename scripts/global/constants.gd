@@ -6,12 +6,13 @@ const SCREEN_SIZE = Vector2(480, 270);
 const SPELLS: Dictionary = {
 	"NOTHING" : null,
 	"fireball" : preload("res://scenes/spells/fireball.tscn"),
-	"fireball+" : preload("res://scenes/spells/fireball+.tscn")
+	"fireball+" : preload("res://scenes/spells/fireball+.tscn"),
+	"lightning" : preload("res://scenes/spells/lightning.tscn")
 }
 
-const STARTING_SPELLS: Dictionary = {}
+const STARTING_SPELLS: Dictionary = {"lightning" : preload("res://scenes/spells/lightning.tscn")}
 
-const SPELL_GRAVITY_ENABLED = true;
+const SPELL_GRAVITY_ENABLED = false;
 
 ## if true, uses mouse aiming
 var mouse_aiming = true;

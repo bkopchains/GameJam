@@ -203,17 +203,18 @@ func switch_spell_by_name(spell_name: String):
 func move_hands():
 	if(Global_Constants.mouse_aiming):
 		var mPos = get_global_mouse_position();
-		var mouse_direction = (mPos - position).normalized();
+		var mouse_direction = (mPos - global_position).normalized();
 		aim_direction = mouse_direction;
+		hands.look_at(mPos);
 	else:
 		var move_direction = Input.get_vector("move_left", "move_right", "move_up", "move_down").normalized()
 		aim_direction = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down").normalized()
 		aim_direction = move_direction if aim_direction.is_zero_approx() else aim_direction;
+		hands.look_at(aim_direction*10 + global_position);
 	if (aim_direction.x > 0):
 		hands.flip_v = 0;
 	elif (aim_direction.x < 0):
 		hands.flip_v = 1;
-	hands.look_at(aim_direction*10 + position);
 	if(spell):
 		spell.direction = aim_direction;
 		if(spell.ammo > 0):
