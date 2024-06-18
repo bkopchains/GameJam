@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://ddb8i66ab0rto"]
 
 [ext_resource type="Script" path="res://scripts/Gravity Wizard.gd" id="1_jqxx2"]
-[ext_resource type="Texture2D" uid="uid://bsm1m80k2lj5" path="res://assets/textures/Grav-Wiz.png" id="2_4lo4r"]
+[ext_resource type="Texture2D" uid="uid://dvoir2t8yonbf" path="res://assets/textures/Grav-Wiz2.png" id="2_jbrt4"]
 
 [sub_resource type="Animation" id="Animation_v3loo"]
 length = 0.001
@@ -78,7 +78,7 @@ script = ExtResource("1_jqxx2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_4lo4r")
+texture = ExtResource("2_jbrt4")
 hframes = 9
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]

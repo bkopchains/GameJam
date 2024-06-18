@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dykofls6kf2yt"]
+[gd_scene load_steps=7 format=3 uid="uid://dykofls6kf2yt"]
 
 [ext_resource type="Script" path="res://scripts/spells/projectiles/lightning.gd" id="1_24otw"]
+[ext_resource type="Material" uid="uid://dw7p40lcark1i" path="res://assets/textures/fx/lightning.tres" id="2_g0pje"]
+[ext_resource type="Texture2D" uid="uid://c6kfmlntfnujy" path="res://assets/textures/fx/lightning_gradient.tres" id="3_hlasf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_68gix"]
 radius = 2.0
@@ -32,18 +34,21 @@ process_callback = 0
 wait_time = 2.0
 
 [node name="Line2D" type="Line2D" parent="."]
+material = ExtResource("2_g0pje")
 points = PackedVector2Array(0, 0, 15, 0)
 width = 2.0
 width_curve = SubResource("Curve_xpno2")
 default_color = Color(1, 1, 0.486275, 1)
 
 [node name="Line2D2" type="Line2D" parent="."]
+material = ExtResource("2_g0pje")
 points = PackedVector2Array(0, 0, 15, 0)
 width = 1.0
 width_curve = SubResource("Curve_xpno2")
 default_color = Color(0.953794, 0.938469, 0.787437, 1)
 
 [node name="Line2D3" type="Line2D" parent="."]
+material = ExtResource("2_g0pje")
 points = PackedVector2Array(0, 0, 15, 0)
 width = 1.0
 width_curve = SubResource("Curve_xpno2")
@@ -65,6 +70,16 @@ scale_amount_curve = SubResource("Curve_3ccxu")
 color = Color(1, 1, 0.53, 1)
 hue_variation_min = -0.26
 hue_variation_max = 0.12
+
+[node name="Light" type="PointLight2D" parent="."]
+shadow_enabled = true
+texture = ExtResource("3_hlasf")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+rotation = -1.57079
+target_position = Vector2(0, 500)
+hit_from_inside = true
+collide_with_areas = true
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -12,3 +12,11 @@ Wizard: ...really?
 Sign: what did you expect, a tutorial?
 
 => END
+
+~ tutorial_3
+
+if Global_Constants.PLAYER_SPELLS.has("fireball"):
+	Sign: hmm... a pretty big gap.
+	Sign: have you tried out that new spell ya got?
+else:
+	Sign: ever feel like you're missing something?

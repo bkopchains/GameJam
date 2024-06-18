@@ -2,12 +2,15 @@ extends Projectile
 @onready var collision_shape_2d = $CollisionShape2D;
 @onready var collision_timer = $CollisionTimer;
 
-@onready var line = $Line2D;
-@onready var line2 = $Line2D2
-@onready var line3 = $Line2D3
+@onready var line: Line2D = $Line2D;
+@onready var line2: Line2D = $Line2D2
+@onready var line3: Line2D = $Line2D3
 
-@onready var timer = $Timer
-@onready var sparks = $Sparks
+@onready var timer: Timer = $Timer
+@onready var sparks: CPUParticles2D = $Sparks
+
+@onready var light: PointLight2D = $Light
+@onready var raycast = $RayCast2D
 
 # idea from https://github.com/Geminimax/Godot-2d-Lightning/blob/master/Scenes/Lightning.gd
 var goal : Vector2 = Vector2(100,100)
@@ -37,12 +40,22 @@ func _ready():
 		#line.points = points	
 		#timer.start(0.1 + randf_range(-0.02,0.1))
 func _physics_process(delta):
+	
 	if(is_fired):
 		sparks.emitting = true;
 		update_points(line, 1);
 		update_points(line2, 2);
 		update_points(line3, 0.5);
+		
+		light.energy = randf_range(0.75,1.25);
+		light.texture.width = goal.x;
+		light.offset.x = goal.x/2;
 	else:
+		if(points.size() == 0):
+			queue_free();
+		light.energy = 0;
+		light.texture.width = goal.x;
+		
 		sparks.emitting = false;
 		points = line.points;
 		points.pop_back();
@@ -61,7 +74,13 @@ func _physics_process(delta):
 
 # add jitter/etc to lightning
 func update_points(to_update: Line2D, scale: float):
-	goal = Vector2(global_position.distance_to(get_global_mouse_position()),0);
+	
+	var draw_to = get_global_mouse_position();
+	if(raycast.is_colliding()):
+		draw_to = raycast.get_collision_point();
+	
+	goal = Vector2(global_position.distance_to(draw_to),0);
+	
 	var curr_line_len = 0
 	points = [Vector2()]
 	var start_point = Vector2()

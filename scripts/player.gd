@@ -46,7 +46,7 @@ signal ammo_max_changed(value);
 signal reload_started(time);
 
 func _ready():
-	spells = Global_Constants.STARTING_SPELLS.duplicate(true);
+	spells = Global_Constants.PLAYER_SPELLS.duplicate(true);
 	is_alive = true
 	switch_spell(current_spell_idx);
 
@@ -80,9 +80,11 @@ func _unhandled_input(event: InputEvent):
 		is_bubbled = false;
 		
 	if(spells.size() > 0):
-		if(Input.is_action_just_pressed("next_spell")):
+		if(Input.is_action_pressed("next_spell")):
+			print("nextSpell")
 			switch_spell((current_spell_idx+1) % spells.size());
-		if(Input.is_action_just_pressed("prev_spell")):
+		elif(Input.is_action_pressed("prev_spell")):
+			print("prevSpell")
 			switch_spell((current_spell_idx-1) % spells.size());
 
 func _physics_process(delta):
@@ -171,6 +173,7 @@ func update_animations(direction):
 func add_spell(spell_name: String):
 	if(Global_Constants.SPELLS.has(spell_name)):
 		spells[spell_name] = Global_Constants.SPELLS.get(spell_name);
+		Global_Constants.PLAYER_SPELLS = spells;
 		switch_spell_by_name(spell_name);
 
 func switch_spell(idx: int):
