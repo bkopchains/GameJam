@@ -12,7 +12,7 @@ const SPELLS: Dictionary = {
 
 ## to be updated while getting new spells
 ## used by dialog etc
-var PLAYER_SPELLS: Dictionary = {"lightning" : preload("res://scenes/spells/lightning.tscn")}
+var PLAYER_SPELLS: Dictionary = {}
 
 const SPELL_GRAVITY_ENABLED = false;
 

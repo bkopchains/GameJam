@@ -1,12 +1,13 @@
 [gd_resource type="GradientTexture2D" load_steps=2 format=3 uid="uid://c6kfmlntfnujy"]
 
 [sub_resource type="Gradient" id="Gradient_xh7bd"]
-offsets = PackedFloat32Array(0, 0.546584, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.980667, 1, 0.71, 1, 0, 0, 0, 1)
+colors = PackedColorArray(0.980667, 1, 0.71, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
 
 [resource]
 gradient = SubResource("Gradient_xh7bd")
-width = 16
-fill_from = Vector2(0.5, 0.2)
-fill_to = Vector2(0.5, 0.8)
+width = 8
+height = 32
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
 metadata/_snap_enabled = true

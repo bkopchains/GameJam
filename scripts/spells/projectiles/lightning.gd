@@ -9,7 +9,12 @@ extends Projectile
 @onready var timer: Timer = $Timer
 @onready var sparks: CPUParticles2D = $Sparks
 
-@onready var light: PointLight2D = $Light
+@onready var light_start = $Light_mid/Light_start
+@onready var light: PointLight2D = $Light_mid
+@onready var light_start_2 = $Light_mid/Light_start2
+
+#@onready var light_end = $Light_mid/Light_end
+
 @onready var raycast = $RayCast2D
 
 # idea from https://github.com/Geminimax/Godot-2d-Lightning/blob/master/Scenes/Lightning.gd
@@ -47,13 +52,18 @@ func _physics_process(delta):
 		update_points(line2, 2);
 		update_points(line3, 0.5);
 		
-		light.energy = randf_range(0.75,1.25);
-		light.texture.width = goal.x;
+		var energy = randf_range(0.75,1.25)
+		light.energy = energy;
+		light.texture.width = goal.x+9;
 		light.offset.x = goal.x/2;
+		#light_end.position.x = goal.x;
 	else:
 		if(points.size() == 0):
 			queue_free();
 		light.energy = 0;
+		#light_end.energy = 0;
+		light_start.energy = 0;
+		light_start_2.energy = 0;
 		light.texture.width = goal.x;
 		
 		sparks.emitting = false;

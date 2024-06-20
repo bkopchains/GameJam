@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dykofls6kf2yt"]
+[gd_scene load_steps=11 format=3 uid="uid://dykofls6kf2yt"]
 
 [ext_resource type="Script" path="res://scripts/spells/projectiles/lightning.gd" id="1_24otw"]
 [ext_resource type="Material" uid="uid://dw7p40lcark1i" path="res://assets/textures/fx/lightning.tres" id="2_g0pje"]
-[ext_resource type="Texture2D" uid="uid://c6kfmlntfnujy" path="res://assets/textures/fx/lightning_gradient.tres" id="3_hlasf"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_68gix"]
 radius = 2.0
@@ -14,6 +13,38 @@ point_count = 6
 [sub_resource type="Curve" id="Curve_3ccxu"]
 _data = [Vector2(0, 0.985294), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_fg72u"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.980667, 1, 0.71, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o7lry"]
+gradient = SubResource("Gradient_fg72u")
+width = 16
+height = 32
+fill_from = Vector2(0.5, 1)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_xh7bd"]
+colors = PackedColorArray(0.980667, 1, 0.71, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6kg45"]
+gradient = SubResource("Gradient_xh7bd")
+width = 32
+height = 32
+fill = 1
+fill_from = Vector2(1, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_j05ml"]
+gradient = SubResource("Gradient_xh7bd")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
+metadata/_snap_enabled = true
 
 [node name="Lightning" type="Area2D"]
 collision_layer = 8
@@ -71,9 +102,21 @@ color = Color(1, 1, 0.53, 1)
 hue_variation_min = -0.26
 hue_variation_max = 0.12
 
-[node name="Light" type="PointLight2D" parent="."]
+[node name="Light_mid" type="PointLight2D" parent="."]
+position = Vector2(4, 0)
 shadow_enabled = true
-texture = ExtResource("3_hlasf")
+texture = SubResource("GradientTexture2D_o7lry")
+
+[node name="Light_start" type="PointLight2D" parent="Light_mid"]
+position = Vector2(-4, 0)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_6kg45")
+offset = Vector2(-16, 0)
+
+[node name="Light_start2" type="PointLight2D" parent="Light_mid"]
+position = Vector2(-4, 0)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_j05ml")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 rotation = -1.57079
